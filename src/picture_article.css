@@ -1,0 +1,25 @@
+.pat-large {
+    width: 100%;
+    aspect-ratio: auto;
+}
+
+.mw-tiles-item-container {
+    height: auto !important;
+}
+
+.full-width-image {
+    flex-grow: 1;
+    padding:0;
+}
+
+.mw-tiles-item {
+    cursor: pointer;
+}
+.mw-tiles-item:hover img{
+    transform: scale(1.1,1.1);
+    transition: all 0.3s;
+}
+
+.mw-tiles-item:not(:hover) img{
+    transition: all 0.3s;
+}

@@ -1,0 +1,322 @@
+Outward Facing AA, inward A
+
+Labels  (TDS-176)
+======
+
+We need to add a tag to each input field type to ensure they are read out.
+
+htmlFor={this.props.id}
+
+in the input.tsx file line ~179
+
+
+Clear Date (TDS-181)
+==========
+
+When tabbing to a date input users need to be able to clear the value.
+
+in file input-date-time.tsx
+
+Add an onKeyDown={this.keyDown} event to the input
+
+Add this function to wipe the value: 
+
+keyDown(e: any) {
+        if(e.key === "Delete") {
+            if (!this.props.isDesignTime) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.props.onChange('');
+            }
+        }
+    }
+	
+
+Close Navigation Hamburger (TDS-183)
+==========================
+
+When a user presses escape on the open nav menu it should close.
+
+In file navigation.tsx
+
+
+Add a keydown event handler: 
+<nav 
+	className="navbar navbar-default"
+	 //ACCESSIBILITY
+	onKeyDown={this.keyDown} 
+	//END-ACCESSIBILITY
+>
+
+Trigger a togle visibility state event:
+
+//ACCESSIBILITY
+keyDown(e: any) {
+	if(e.key === "Escape") {
+		if (!this.props.isDesignTime) {
+			if (
+				toggleRef.current &&
+				!manywho.utils.isEqual(window.getComputedStyle(toggleRef.current).display, 'none', true)
+			) {
+				toggleRef.current.click();
+			}
+		}
+	}
+}
+//END-ACCESSIBILITY
+
+
+Force warnings and errors to be read out (TDS-189)
+========================================
+
+Warning and error messages need to be detected and read by screen readers.
+
+This is done by adding role="alert" to the page elements.
+
+e.g. in file items-container.tsx  line ~397
+//END-ACCESSIBILITY add role="alert"
+contentElement = (
+	<div className="mw-items-empty" role="alert"> 
+		<p className="lead">
+			{noResultsCaption}
+		</p>
+	</div>
+);
+
+
+Focused Button Contrast (TDS-179)
+=======================
+
+When the user tabs to a button it should change contrast dramatically.
+
+This can be done by adding a css pseudo class: 
+
+<style>
+	.mw-bs .outcome:focus {
+		background: #000;
+		color: #fefefe;
+	}
+</style>
+
+
+Need to be able to have specific elements read out  (TDS-177 & 190)
+==================================================
+
+When we use content elements as feedback messages we need to be able to flag them for alert read out.
+
+Almose the same as "Force warnings and errors to be read out" above.
+
+These are mostly presentation objects and we need to have the role="alert" tag added.
+
+I think a new attribute should be added which forces this html attribute to be added e.g.
+
+attribute name of "alert"="true"
+
+and do this in presentation.tsx to remove the content when hidden and set the alert tag if attribute is set 
+
+		let presentationField: any
+
+		let role: string="";
+        if(model.attributes?.alert?.toLowerCase() === 'true'){
+            role="alert"
+        }
+		
+        if (model.isVisible === true) {
+            
+            presentationField = (
+                <div>
+                    <label
+                        htmlFor={this.props.id}
+                    >
+                        {model.label}
+                    </label>
+                    <div 
+                        ref={(element: HTMLDivElement) => {this.content=element}}
+                        dangerouslySetInnerHTML={{ __html: this.html }} 
+                        tabIndex={0}
+						role={role}
+                    />
+                    <span className="help-block">
+                        {model.validationMessage || state.validationMessage}
+                    </span>
+                    <span className="help-block">{model.helpInfo}</span>
+                </div>
+            );
+        }
+        else {
+            presentationField = (
+                <div/> 
+            );
+        }
+
+        return (
+            <div 
+                className={className} 
+                id={this.props.id}
+                role={role}
+            >
+                {renderOutcomesInOrder(presentationField, outcomeElements, outcomes, model.isVisible)}
+            </div>
+        );
+
+
+Table Pagination Buttons (TDS-184)
+========================
+
+The pagination buttons need to have a readable title
+
+add an aria role of "button" to each and then a span
+
+<button className="btn btn-default" 
+	onClick={onFirstPage} 
+	disabled={pageIndex <= 1 || isDesignTime}
+	role="button"
+>
+	<span style={{fontSize: "0"}}>First Page</span>
+	<span className="glyphicon glyphicon-backward" />
+</button>
+
+
+Table
+=====
+
+Tables need to be readable and tabable per row
+
+Search buttons and outcomes need to be readabale too
+
+For buttons / outcomes including search: -
+
+In items-header.tsx line ~47
+	search = <div className="mw-items-header-search input-group">
+			<input className="form-control" 
+				value={this.state.search ? this.state.search : undefined} 
+				onChange={this.onSearchChanged} 
+				onKeyUp={this.onSearchEnter} 
+				placeholder="Search" 
+			/>
+			<span className="input-group-btn">
+				<button className="btn btn-default" onClick={this.onSearch} role="button">
+					<span style={{fontSize: "0"}}>Search</span>
+					<span className="glyphicon glyphicon-search"/>
+				</button>
+
+			</span>
+		</div>;
+		
+		if (this.props.outcomes) {
+		outcomes = <div className="mw-items-header-outcomes">
+			{
+				this.props.outcomes
+				.filter(outcome => outcome.isBulkAction)
+				.map(outcome => <Outcome key={outcome.id} id={outcome.id} flowKey={this.props.flowKey} />)
+			}
+		</div>;
+	}
+
+	this.props.isRefreshable ? refresh = (
+		<button className="btn btn-sm btn-default" 
+			onClick={this.props.refresh} 
+			disabled={this.props.isDisabled}
+			role="button">
+			<span style={{fontSize: "0"}}>Search</span>
+			<span className="glyphicon glyphicon-refresh" />
+		</button>
+	) : null;
+
+For Rows: -
+Add tabIndex={0} and build a voice label e.g. 
+
+...each row & column
+voiceLabel += " " + this.columnLabels[colPos] + " equals " + (contentValue.length>0? contentValue : " Empty");
+                    colPos++;
+
+return (
+	<tr 
+		className={className} 
+		id={item.internalId} 
+		key={item.internalId}
+		onClick={onRowClicked}
+		tabIndex={0}
+		title={voiceLabel}
+	>
+		{columns}
+	</tr>
+);
+			
+			
+			
+
+(TDS-178) - CSS
+(TDS-180) - Use Browser Calendar
+(TDS-182) - Disable Auto Complete ?
+(TDS-187) - Zoomed Tab ?
+(TDS-188) - Table Compliance ???????????
+(TDS-191) - CSS
+
+Other
+=====
+
+Select / Combo
+The existing implementation doesn't read out at all.  I fear react-selectize is not compliant 
+
+I recomment reverting to the standard html <select> implementation which complies almost completely with a few enhancements: -
+
+
+Add the htmlFor tag to the label.
+
+ const comboBox = (
+            <div>
+                <label
+                    htmlFor={this.props.id}
+                >
+                    {model.label}
+
+Revert the select element t: -
+let selectElement = (
+	<select 
+		id={this.props.id}
+		multiple={model.isMultiSelect}
+		style={{width: model.width + "px", minWidth: model.width + "px", padding: "0.6rem"}}
+		onFocus={this.onFocus}
+		onBlur={this.onBlur}
+		onChange={this.onValueChange}
+		ref={(element: HTMLSelectElement) =>{this.comboBox = element}} // newer style reference
+		//ACCESSIBILITY
+		onKeyDown={this.keyDown} 
+		//END-ACCESSIBILITY
+	>
+		{options}
+	</select>
+);
+		
+Note the keyDown handler to allow clearing the selected item.
+
+Build the options like this: -
+
+options.push(
+	<option value={""} selected={!values}>
+		{"Please Select"}
+	</option>
+)
+this.props.objectData.forEach((value: any) => {
+	options.push(
+		<option value={value.internalId} selected={values?.indexOf(value.internalId) > 0}>
+			{value.properties[0].contentValue}
+		</option>
+	) 
+});
+
+KeyDown handler like this: -
+
+//ACCESSIBILITY
+keyDown(e: any) {
+	if(e.key === "Delete") {
+		if (!this.props.isDesignTime) {
+			e.preventDefault();
+			e.stopPropagation();
+			this.props.clearSelection();
+		}
+	}
+}
+//END-ACCESSIBILITY
+

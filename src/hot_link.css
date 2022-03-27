@@ -1,0 +1,89 @@
+.hotlink-header {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.hotlink-header-icon {
+    color: #fefefe;
+    margin: auto 0.1rem auto 0.1rem;
+    font-size: 1rem;
+    top: 0 !important;
+    flex-grow: 0;
+}
+
+.hotlink-header-label {
+    color: #fefefe;
+    font-size: 1rem;
+    margin-left: 1rem;
+    flex-grow: 1;
+}
+
+.hotlink-header-button {
+    color: #fefefe;
+    margin: auto 0.1rem auto 0.1rem;
+    font-size: 1rem;
+    top: 0 !important;
+    cursor: pointer;
+    flex-grow: 0;
+    z-index: 10;
+}
+
+.hotlink-links {
+    display: inline;
+    flex-direction: row;
+    padding: 0.3rem 1rem 0.3rem 1rem;
+}
+
+.hotlink-link {
+    cursor: pointer;
+}
+
+.hotlink-link:hover {
+    text-decoration: underline;
+}
+
+.hotlink-menuitems {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    border-top: 1px solid #aaa;
+}
+
+.hotlink-menuitem {
+    display: flex;
+    flex-direction: row;
+} 
+
+.hotlink-menuitem-label {
+    flex-grow: 1; 
+}
+
+.hotlink-menuitem-chevron {
+    flex-grow: 0; 
+    color: #328e3f;
+    top: 0 !important;
+    margin: auto;
+}
+
+.hotlink-menuitem:hover .hotlink-menuitem-label {
+    text-decoration: underline;
+}
+
+.hotlink-menuitem:hover .hotlink-menuitem-chevron {
+    transform: translate(5px, 0);
+    transition: all 0.3s;
+}
+
+.hotlink-menuitem:not(:hover) .hotlink-menuitem-chevron {
+    transform: translate(-5px, 0);
+    transition: all 0.3s;
+}
+
+.hotlink-menuitem-all {
+    color: #328e3f;
+}
+
+.hotlink-menuitem-all:hover {
+    text-decoration: underline;
+}
