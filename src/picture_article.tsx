@@ -17,18 +17,24 @@ export default class PictureArticle extends React.Component<any,any> {
         super(props);
     }
 
+    itemClicked(e: any, item: FlowObjectData) {
+        e.stopPropagation();
+        let parent: Tiles = this.props.parent;
+        parent.tileClicked(item);
+    }
+
     render() {
 
         manywho.log.info(`Rendering Tile Item: ${this.props.item}`);
         let parent: Tiles = this.props.parent;
-        let objData: FlowObjectData = parent.tiles.get(this.props.item);
+        let tile: FlowObjectData = parent.tiles.get(this.props.item);
         let flexBasis: string = Math.floor(((100 / this.props.tilesPerRow)-1)) + "%";
         
         let content: any = null;
-        let header: string = objData.properties?.Title?.value as string;
-        let details: string = objData.properties?.Details?.value as string;
-        let link: string = objData.properties?.LinkLabel?.value as string;
-        let image: string = objData.properties?.Image?.value as string;
+        let header: string = tile.properties?.Title?.value as string;
+        let details: string = tile.properties?.Details?.value as string;
+        let link: string = tile.properties?.LinkLabel?.value as string;
+        let image: string = tile.properties?.Image?.value as string;
 
         switch(true){
             case image?.indexOf("glyphicon") >=0:
@@ -67,7 +73,7 @@ export default class PictureArticle extends React.Component<any,any> {
             >
                 <div 
                     className={"mw-tiles-item"} 
-                    onClick={(e: any) => {parent.tileClicked(this.props.item)}} 
+                    onClick={(e: any) => {this.itemClicked(e,tile)}} 
                     id={this.props.item} 
                     style={{position: "relative"}}
                 >
