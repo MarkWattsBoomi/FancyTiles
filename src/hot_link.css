@@ -33,6 +33,7 @@
     display: inline;
     flex-direction: row;
     padding: 0.3rem 1rem 0.3rem 1rem;
+    min-height: 70px;
 }
 
 .hotlink-link {
@@ -41,6 +42,7 @@
 
 .hotlink-link:hover {
     text-decoration: underline;
+    font-weight: 500;
 }
 
 .hotlink-menuitems {
@@ -68,6 +70,7 @@
 
 .hotlink-menuitem:hover .hotlink-menuitem-label {
     text-decoration: underline;
+    font-weight: 500;
 }
 
 .hotlink-menuitem:hover .hotlink-menuitem-chevron {
@@ -86,4 +89,5 @@
 
 .hotlink-menuitem-all:hover {
     text-decoration: underline;
+    font-weight: 500;
 }

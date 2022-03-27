@@ -1,7 +1,7 @@
 import { FlowObjectData, FlowObjectDataArray } from 'flow-component-model';
 import * as React from 'react';
 import Tiles from './tiles';
-import './warm_link.css';
+import './news_article.css';
 
 declare const manywho: any;
 
@@ -11,7 +11,7 @@ interface IDropDownState {
     isOpen?: boolean;
 }
 
-export default class WarmLink extends React.Component<any,any> {
+export default class NewsArticle extends React.Component<any,any> {
 
     expanded: boolean = false;
 
@@ -43,80 +43,98 @@ export default class WarmLink extends React.Component<any,any> {
         let icon: any = null;
         let header: any = (
             <div
-                className='warmlink-header'
+                className='newsarticle-header'
             >
                 <span
-                    className='warmlink-header-label'
+                    className='newsarticle-header-label'
                 >
                     {tile.properties?.Title?.value as string}
                 </span>
-                <span
-                    className='warmlink-header-icon glyphicon glyphicon-menu-right'
-                />
             </div>
             
         );
-        let details: string = tile.properties?.Details?.value as string;
-        let link: string = tile.properties?.LinkLabel?.value as string;
-        let image: string = tile.properties?.Image?.value as string;
 
+        
+        let body: any = (
+            <div
+                className='newsarticle-body'
+            >
+                <span
+                    className='newsarticle-body-text'
+                >
+                    {tile.properties?.Details?.value as string}
+                </span>
+            </div>
+            
+        );
+        let footer: any = (
+            <div
+                className='newsarticle-footer'
+            >
+                <span
+                    className='newsarticle-footer-text'
+                >
+                    {tile.properties?.LinkLabel?.value as string}
+                </span>
+            </div>
+            
+        );
+
+        let imageName: string = tile.properties?.Image?.value as string;
+        let image: any;
         switch(true){
-            case image?.indexOf("glyphicon") >=0:
-                icon = (
+            case imageName?.indexOf("glyphicon") >=0:
+                image = (
                     <span 
-                        className={"warmlink-icon-icon glyphicon " + image}
+                        className={"warmlink-icon-icon glyphicon " + imageName}
                     />
+                );
+                break;
+            case imageName?.indexOf("http://") >=0:
+            case imageName?.indexOf("https://") >=0:
+                image = (
+                    <div 
+                        className="full-width-image" 
+                        style={{display: 'flex'}}
+                    >
+                        <img 
+                            className={"deft-large"}
+                            src={image}
+                        />
+                    </div>
                 );
                 break;
         }
 
 
-        let links: any = [];
-        let linkClass: string = "warmlink-links";
-        let linkItems: FlowObjectDataArray=tile.properties?.ChildLinks?.value as FlowObjectDataArray;
-        if(linkItems && linkItems.items.length > 0) {
-            linkItems.items.forEach((link: FlowObjectData) => {
-                if(links.length>0) links.push(", ");
-                links.push(
-                    <span
-                        className='warmlink-link'
-                        onClick={(e: any) => { this.itemClicked(e, link)}}
-                    >
-                        {link.properties.Title?.value}
-                    </span>
-                );
-            })
-        }
+        
 
         
 
         return (
             <div
-                className='mw-tiles-item-container'
+                className='mw-tiles-item-container newsarticle'
                 style={{position: "relative", flexBasis: flexBasis, height: "auto"}}
             >
                 <div 
-                    className={"mw-tiles-item warmlink"} 
+                    className={"mw-tiles-item newsarticle-tile"} 
                     onClick={(e: any) => {this.itemClicked(e, tile)}} 
                     id={this.props.item} 
                     style={{position: "relative"}}
                 >
+                    
                     <div
-                        className='warmlink-icon'
-                    >
-                            {icon}
-                    </div>
-                    <div
-                        className='warmlink-content'
+                        className='newsarticle-content'
                     >
                         {header}
-                        <div
-                            className={linkClass}
-                        >
-                            {links}
-                        </div>
+                        {body}
+                        {footer}
                     </div>
-                    
+                    <div
+                        className='newsarticle-image'
+                    >
+                            {image}
+                    </div>
                 </div>
             </div>
         );

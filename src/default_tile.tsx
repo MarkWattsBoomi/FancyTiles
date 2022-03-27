@@ -22,6 +22,7 @@ export default class DefaultTile extends React.Component<any,any> {
         manywho.log.info(`Rendering Tile Item: ${this.props.item}`);
         let parent: Tiles = this.props.parent;
         let objData: FlowObjectData = parent.tiles.get(this.props.item);
+        let flexBasis: string = Math.floor(((100 / this.props.tilesPerRow)-1)) + "%";
         
         let content: any = null;
         let header: string = objData.properties?.Title?.value as string;
@@ -62,6 +63,7 @@ export default class DefaultTile extends React.Component<any,any> {
         return (
             <div
                 className='mw-tiles-item-container'
+                style={{position: "relative", flexBasis: flexBasis}}
             >
                 <div 
                     className={"mw-tiles-item"} 

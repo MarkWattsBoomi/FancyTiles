@@ -30,6 +30,7 @@
 
 .warmlink-header:hover .warmlink-header-label{
     text-decoration: underline;
+    font-weight: 500;
 }
 
 .warmlink:hover .warmlink-header-icon {
@@ -52,4 +53,19 @@
     flex-grow: 0;
     color: #328e3f;
     margin: auto;
+}
+
+.warmlink-links {
+    display: inline;
+    flex-direction: row;
+    padding: 0.3rem 1rem 0.3rem 1rem;
+}
+
+.warmlink-link {
+    cursor: pointer;
+}
+
+.warmlink-link:hover {
+    text-decoration: underline;
+    font-weight: 500;
 }

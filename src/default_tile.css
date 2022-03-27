@@ -1,3 +1,8 @@
+.full-width-image {
+    height: 185px;
+    overflow: hidden;
+}
+
 .deft-large {
     width: 100%;
     aspect-ratio: auto;
@@ -8,7 +13,7 @@
 }
 
 .mw-tiles-item-container {
-    height: auto !important;
+    height: auto;
 }
 
 .mw-tiles {
@@ -30,6 +35,7 @@
 .mw-tiles-item:hover .ft-link {
     text-decoration: underline;
     text-underline-offset: 0.3rem;
+    font-weight: 500;
 }
 
 .ft-link {
