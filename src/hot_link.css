@@ -1,3 +1,12 @@
+.hotlink {
+    border: 1px solid #cccccc;
+    box-shadow: none;
+    height: fit-content;
+    margin-bottom: 1em;
+    margin-right: 1em;
+    perspective: 800px;
+    position: relative;
+}
 .hotlink-header {
     padding: 0.5rem;
     display: flex;
@@ -14,7 +23,7 @@
 
 .hotlink-header-label {
     color: #fefefe;
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin-left: 1rem;
     flex-grow: 0;
     margin-right: auto;
@@ -26,6 +35,13 @@
     font-weight: 500;
 }
 
+.hotlink-header-deadlabel {
+    color: #fefefe;
+    font-size: 1.1rem;
+    margin-left: 1rem;
+    flex-grow: 0;
+    margin-right: auto;
+}
 
 .hotlink-header-button {
     color: #fefefe;
@@ -46,6 +62,7 @@
 
 .hotlink-link {
     cursor: pointer;
+    font-size: 1rem;
 }
 
 .hotlink-link:hover {
@@ -63,10 +80,18 @@
 .hotlink-menuitem {
     display: flex;
     flex-direction: row;
+    margin-bottom: 1rem;
 } 
+
+.hotlink-menuitem:first-of-type{
+    margin-top: 1rem;
+}
 
 .hotlink-menuitem-label {
     flex-grow: 1; 
+    font-size: 1rem;
+    line-height: 1.5;
+    cursor: pointer;
 }
 
 .hotlink-menuitem-chevron {
@@ -74,6 +99,8 @@
     color: #328e3f;
     top: 0 !important;
     margin: auto;
+    margin-top: 0;
+    font-size: 1.4rem;
 }
 
 .hotlink-menuitem:hover .hotlink-menuitem-label {
@@ -93,6 +120,8 @@
 
 .hotlink-menuitem-all {
     color: #328e3f;
+    font-size: 1rem;
+    cursor: pointer;
 }
 
 .hotlink-menuitem-all:hover {

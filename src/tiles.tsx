@@ -3,6 +3,7 @@ import * as React from 'react';
 import DefaultTile from './default_tile';
 import HotLink from './hot_link';
 import NewsArticle from './news_article';
+import NoticeFrame from './notice_frame';
 import PictureArticle from './picture_article';
 import WarmLink from './warm_link';
 
@@ -73,6 +74,16 @@ export default class Tiles extends FlowComponent {
                 case "warmlink":
                     tiles.push(
                         <WarmLink
+                            parent={this}
+                            item={tile.internalId}
+                            tilesPerRow={tilesPerRow}
+                        />
+                    );
+                    break;
+
+                case "noticeframe":
+                    tiles.push(
+                        <NoticeFrame
                             parent={this}
                             item={tile.internalId}
                             tilesPerRow={tilesPerRow}

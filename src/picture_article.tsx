@@ -79,11 +79,11 @@ export default class PictureArticle extends React.Component<any,any> {
                     style={{position: "relative"}}
                 >
                     {content}    
-                    <div className="mw-tiles-item-header">
+                    <div className="picture-article-header">
                         <h4 title={header}>{header}</h4>
                     </div>
                     
-                    <div className="mw-tiles-item-footer list-unstyled">
+                    <div className="picture-article-body">
                         {details}
                     </div>
                     <div className="picture-article-link">

@@ -1,0 +1,53 @@
+.noticeframe {
+    border: 3px solid #26522d !important;
+    padding: 3rem 2rem;
+    background-color: #fefefe;
+}
+
+.noticeframe-tile {
+
+}
+
+.noticeframe-content {
+
+}
+
+.noticeframe-header {
+
+}
+
+.noticeframe-header-label {
+    font-size: 2.5rem;
+    font-family: sans-serif;
+    color: #000;
+}
+
+.noticeframe-body {
+
+}
+
+.noticeframe-body-text {
+    font-size: 1.2rem;
+    color: #000;
+}
+
+
+.noticeframe-links {
+    padding: 1.5rem 0;
+}
+
+.noticeframe-linklist {
+    padding-left: 1.1rem;
+}
+
+.noticeframe-link {
+    font-size: 1.1rem;
+    color: #26522d;
+    text-decoration: underline;
+    line-height: 1.1;
+    cursor: pointer;
+}
+
+.noticeframe-link:hover {
+    text-decoration: none;
+}

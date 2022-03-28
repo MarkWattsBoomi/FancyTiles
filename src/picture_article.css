@@ -2,23 +2,30 @@
     cursor: pointer;
 }
 
-.picture-article-link {
+.picture-article-header {
     padding: 0 1em 1em 1em !important;
-    color: #096f48
 }
 
-.mw-tiles-item-container {
-    height: auto !important;
+.picture-article-body {
+    padding: 0 1em 1em 1em !important;
+    font-size: 1rem;
+}
+
+.picture-article-link {
+    padding: 0 1em 1em 1em !important;
+    color: #096f48;
+    font-size: 1rem;
 }
 
 .picture-article-image {
     height: 185px;
+    width: 100%;
     overflow: hidden;
 }
 
 .picture-article-image-image{
     width: 100%;
-    aspect-ratio: auto;
+    object-fit: fill;
 }
 
 .picture-article {
