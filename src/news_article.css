@@ -3,7 +3,7 @@
     flex-direction: row;
     margin-left: 1rem;
     font-size: 1.4rem;
-    color: #000;
+    color: #333;
     border-top: 5px solid #666;
     padding-top: 0.4rem;
     margin-top: 3rem;
@@ -60,7 +60,7 @@
 
 .newsarticle-body-text {
     font-size: 1rem;
-    color: #111;
+    color: #333;
 }
 
 .newsarticle-newsarticle-links {

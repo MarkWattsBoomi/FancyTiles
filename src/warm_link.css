@@ -58,6 +58,15 @@
     margin: auto;
 }
 
+.warmlink-body {
+
+}
+
+.warmlink-body-text {
+    font-size: 1rem;
+    color: #333;
+}
+
 .warmlink-links {
     display: inline;
     flex-direction: row;

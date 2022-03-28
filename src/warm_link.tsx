@@ -56,10 +56,23 @@ export default class WarmLink extends React.Component<any,any> {
             </div>
             
         );
-        let details: string = tile.properties?.Details?.value as string;
-        let link: string = tile.properties?.LinkLabel?.value as string;
-        let image: string = tile.properties?.Image?.value as string;
+        
+        
 
+        let body: any = (
+            <div
+                className='warmlink-body'
+            >
+                <span
+                    className='warmlink-body-text'
+                >
+                    {tile.properties?.Details?.value as string}
+                </span>
+            </div>
+            
+        );
+
+        let image: string = tile.properties?.Image?.value as string;
         switch(true){
             case image?.indexOf("glyphicon") >=0:
                 icon = (
@@ -110,6 +123,7 @@ export default class WarmLink extends React.Component<any,any> {
                         className='warmlink-content'
                     >
                         {header}
+                        {body}
                         <div
                             className={linkClass}
                         >
