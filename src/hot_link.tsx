@@ -44,7 +44,10 @@ export default class HotLink extends React.Component<any,any> {
         let header: any = (
             <span
                 className='hotlink-header-label'
-            >{tile.properties?.Title?.value as string}</span>
+                onClick={(e: any) => {this.itemClicked(e, tile)}} 
+            >
+                {tile.properties?.Title?.value as string}
+            </span>
         );
         let details: string = tile.properties?.Details?.value as string;
         let link: string = tile.properties?.LinkLabel?.value as string;
@@ -146,7 +149,6 @@ export default class HotLink extends React.Component<any,any> {
             >
                 <div 
                     className={"mw-tiles-item"} 
-                    onClick={(e: any) => {this.itemClicked(e, tile)}} 
                     id={this.props.item} 
                     style={{position: "relative"}}
                 >

@@ -2,6 +2,7 @@ import { FlowObjectData } from 'flow-component-model';
 import * as React from 'react';
 import Tiles from './tiles';
 import './default_tile.css';
+import './picture_article.css';
 
 declare const manywho: any;
 
@@ -54,11 +55,11 @@ export default class PictureArticle extends React.Component<any,any> {
             case image?.indexOf("https://") >=0:
                 content = (
                     <div 
-                        className="full-width-image" 
+                        className="picture-article-image" 
                         style={{display: 'flex'}}
                     >
                         <img 
-                            className={"deft-large"}
+                            className={"picture-article-image-image"}
                             src={image}
                         />
                     </div>
@@ -72,7 +73,7 @@ export default class PictureArticle extends React.Component<any,any> {
                 style={{position: "relative", flexBasis: flexBasis, height: "auto"}}
             >
                 <div 
-                    className={"mw-tiles-item"} 
+                    className={"mw-tiles-item picture-article"} 
                     onClick={(e: any) => {this.itemClicked(e,tile)}} 
                     id={this.props.item} 
                     style={{position: "relative"}}
@@ -85,7 +86,7 @@ export default class PictureArticle extends React.Component<any,any> {
                     <div className="mw-tiles-item-footer list-unstyled">
                         {details}
                     </div>
-                    <div className="ft-link">
+                    <div className="picture-article-link">
                         {link}
                     </div>
                 </div>

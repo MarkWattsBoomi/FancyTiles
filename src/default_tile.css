@@ -1,16 +1,4 @@
-.full-width-image {
-    height: 185px;
-    overflow: hidden;
-}
 
-.deft-large {
-    width: 100%;
-    aspect-ratio: auto;
-}
-
-.deft-content {
-
-}
 
 .mw-tiles-item-container {
     height: auto;
@@ -20,24 +8,6 @@
     margin-top: 1rem;
 }
 .mw-tiles-item {
-    cursor: pointer;
     overflow: hidden;
 }
-.mw-tiles-item:hover img{
-    transform: scale(1.1,1);
-    transition: all 0.3s;
-}
 
-.mw-tiles-item:not(:hover) img{
-    transition: all 0.3s;
-}
-
-.mw-tiles-item:hover .ft-link {
-    text-decoration: underline;
-    text-underline-offset: 0.3rem;
-    font-weight: 500;
-}
-
-.ft-link {
-    padding: 0 1em 1em 1em !important;
-}

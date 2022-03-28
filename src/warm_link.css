@@ -1,5 +1,5 @@
 .warmlink {
-    border-left: 4px solid rgb(100, 100, 100);
+    border-left: 4px solid #096f48;;
     display: flex;
     flex-direction: row !important;
 }
@@ -14,6 +14,7 @@
 .warmlink-icon-icon {
     margin: auto;
     font-size: 1.4rem;
+    color: #096f48;
 }
 
 .warmlink-content {
@@ -46,19 +47,21 @@
 .warmlink-header-label {
     font-size: 1rem;
     flex-grow: 1;
+    cursor: pointer;
+    color: #096f48
 }
 
 .warmlink-header-icon {
     font-size: 1rem;
     flex-grow: 0;
-    color: #328e3f;
+    color: #096f48;
     margin: auto;
 }
 
 .warmlink-links {
     display: inline;
     flex-direction: row;
-    padding: 0.3rem 1rem 0.3rem 1rem;
+    padding: 0.3rem 1rem 0.3rem 0rem;
 }
 
 .warmlink-link {

@@ -16,8 +16,16 @@
     color: #fefefe;
     font-size: 1rem;
     margin-left: 1rem;
-    flex-grow: 1;
+    flex-grow: 0;
+    margin-right: auto;
+    cursor: pointer;
 }
+
+.hotlink-header-label:hover {
+    text-decoration: underline;
+    font-weight: 500;
+}
+
 
 .hotlink-header-button {
     color: #fefefe;
