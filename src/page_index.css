@@ -1,0 +1,40 @@
+.mw-tiles-item-container.pageindex {
+    border: none;
+    box-shadow: none;
+    border-bottom:1px solid #ccc;
+    padding-bottom: 0.7rem;
+}
+
+.mw-tiles-item-container.pageindex:last-of-type {
+    border-bottom:none;
+}
+
+.pageindex-tile {
+    
+}
+
+.pageindex-body {
+    display: flex;
+    flex-direction: row;
+}
+
+.pageindex-body-title {
+    font-size: 1.1rem;
+    flex-basis: 6rem;
+    white-space: nowrap;
+}
+
+.pageindex-body-text {
+    font-size: 1.1rem;
+    flex-grow: 0;
+    white-space: nowrap;
+}
+
+.pageindex-body-text-selected {
+    color: #096f48;
+    cursor: pointer;
+}
+
+.pageindex-body-text-selected:hover {
+    text-decoration: underline;
+}

@@ -4,6 +4,7 @@ import DefaultTile from './default_tile';
 import HotLink from './hot_link';
 import NewsArticle from './news_article';
 import NoticeFrame from './notice_frame';
+import PageIndex from './page_index';
 import PictureArticle from './picture_article';
 import WarmLink from './warm_link';
 
@@ -47,6 +48,7 @@ export default class Tiles extends FlowComponent {
         let tilesPerRow: number = parseInt(this.getAttribute("TilesPerRow", "4").toLowerCase());
 
         let header: any;
+        let componentStyle: React.CSSProperties = {};
         
         let tiles: any[] = [];
         this.tiles?.forEach((tile: FlowObjectData) => {
@@ -109,6 +111,16 @@ export default class Tiles extends FlowComponent {
                         />
                     );
                     break;
+                case "pageindex":
+                    componentStyle.marginTop = "3.5rem";
+                    tiles.push(
+                        <PageIndex
+                            parent={this}
+                            item={tile.internalId}
+                            tilesPerRow={tilesPerRow}
+                        />
+                    );
+                    break;
 
                 case "default":
                     tiles.push(
@@ -132,6 +144,7 @@ export default class Tiles extends FlowComponent {
         return (
             <div 
                 className={className} 
+                style={componentStyle}
                 id={this.props.id} 
                 ref="container"
             >
