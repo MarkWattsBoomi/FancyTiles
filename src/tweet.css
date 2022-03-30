@@ -1,0 +1,75 @@
+.tweet-banner {
+    display: flex;
+    flex-direction: row;
+    margin-left: 1rem;
+    font-size: 1.4rem;
+    color: #333;
+    border-top: 5px solid #666;
+    padding-top: 0.4rem;
+    margin-top: 3rem;
+}
+
+.tweet {
+    display: flex;
+    flex-direction: row !important;
+    border: none !important;
+    background-color: transparent;
+    background: transparent;
+    box-shadow: none !important;
+}
+
+.tweet-tile {
+    display: flex;
+    flex-direction: column !important;
+    border-bottom: 1px solid #aaa !important;
+    margin-bottom: 1rem !important;
+}
+
+.tweet-tile:last-of-type {
+    border-bottom: none !important;
+}
+
+.tweet-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.tweet-image {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    flex-grow: 0;
+}
+
+.tweet-header {
+    display: flex;
+    flex-direction: row;
+}
+
+.tweet-header-label {
+    font-size: 1.2rem;
+    color: #328e3f;
+}
+
+.tweet-body {
+    display: flex;
+    flex-direction: row;
+}
+
+.tweet-body-text {
+    font-size: 1rem;
+    color: #333;
+}
+
+.tweet-newsarticle-links {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+}
+
+.tweet-footer-text {
+    font-size: 0.9rem;
+    color: #666;
+}

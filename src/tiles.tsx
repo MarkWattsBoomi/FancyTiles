@@ -6,6 +6,7 @@ import NewsArticle from './news_article';
 import NoticeFrame from './notice_frame';
 import PageIndex from './page_index';
 import PictureArticle from './picture_article';
+import Tweet from './tweet';
 import WarmLink from './warm_link';
 
 declare var manywho: any;
@@ -111,6 +112,26 @@ export default class Tiles extends FlowComponent {
                         />
                     );
                     break;
+
+                case "tweet":
+                    if(this.model.label?.length > 0) {
+                        header = (
+                            <div
+                                className='tweet-banner'
+                            >
+                                {this.model.label}
+                            </div>
+                        );
+                    }
+                    tiles.push(
+                        <Tweet
+                            parent={this}
+                            item={tile.internalId}
+                            tilesPerRow={tilesPerRow}
+                        />
+                    );
+                    break;
+
                 case "pageindex":
                     componentStyle.marginTop = "3.5rem";
                     tiles.push(
