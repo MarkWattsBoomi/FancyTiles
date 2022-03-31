@@ -36,6 +36,10 @@ export default class PictureArticle extends React.Component<any,any> {
         let details: string = tile.properties?.Details?.value as string;
         let link: string = tile.properties?.LinkLabel?.value as string;
         let image: string = tile.properties?.Image?.value as string;
+        let imageStyle: React.CSSProperties = {display: 'flex'};
+        if(parent.model.height) {
+            imageStyle.height=parent.model.height + "px";
+        }
 
         switch(true){
             case image?.indexOf("glyphicon") >=0:
@@ -56,7 +60,7 @@ export default class PictureArticle extends React.Component<any,any> {
                 content = (
                     <div 
                         className="picture-article-image" 
-                        style={{display: 'flex'}}
+                        style={imageStyle}
                     >
                         <img 
                             className={"picture-article-image-image"}

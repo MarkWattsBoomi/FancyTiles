@@ -19,8 +19,8 @@
 }
 
 .picture-article-image {
-    height: 185px;
     width: 100%;
+    height: auto;
     overflow: hidden;
 }
 
