@@ -17,18 +17,52 @@ export default class DefaultTile extends React.Component<any,any> {
         super(props);
     }
 
+    itemClicked(e: any, item: FlowObjectData) {
+        e.stopPropagation();
+        let parent: Tiles = this.props.parent;
+        parent.tileClicked(item);
+    }
+
     render() {
 
         manywho.log.info(`Rendering Tile Item: ${this.props.item}`);
         let parent: Tiles = this.props.parent;
-        let objData: FlowObjectData = parent.tiles.get(this.props.item);
-        let flexBasis: string = Math.floor(((100 / this.props.tilesPerRow)-1)) + "%";
+        let tile: FlowObjectData = parent.tiles.get(this.props.item);
+        let flexBasis: string = Math.floor((90 / this.props.tilesPerRow)) + "%";
         
         let content: any = null;
-        let header: string = objData.properties?.Title?.value as string;
-        let details: string = objData.properties?.Details?.value as string;
-        let link: string = objData.properties?.LinkLabel?.value as string;
-        let image: string = objData.properties?.Image?.value as string;
+        let header: string;
+        if(parent.model.displayColumns[0]) {
+            header = tile.properties?.[parent.model.displayColumns[0].developerName]?.value as string;
+        }
+        else {
+            header = tile.properties?.Title?.value as string;
+        }
+
+        let image: string;
+        if(parent.model.displayColumns[1]) {
+            image = tile.properties?.[parent.model.displayColumns[1].developerName]?.value as string;
+        }
+        else {
+            image = tile.properties?.Image?.value as string;
+        }
+        
+        let details: string;
+        if(parent.model.displayColumns[2]) {
+            details = tile.properties?.[parent.model.displayColumns[2].developerName]?.value as string;
+        }
+        else {
+            details = tile.properties?.Details?.value as string;
+        }
+
+        let link: string;
+        if(parent.model.displayColumns[3]) {
+            link = tile.properties?.[parent.model.displayColumns[3].developerName]?.value as string;
+        }
+        else {
+            link = tile.properties?.LinkLabel?.value as string;
+        }
+       
 
         switch(true){
             case image?.indexOf("glyphicon") >=0:
@@ -38,7 +72,7 @@ export default class DefaultTile extends React.Component<any,any> {
                         style={{display: 'flex'}}
                     >
                         <span 
-                            className={"mw-tiles-item-icon glyphicon " + image}
+                            className={"default-icon glyphicon " + image}
                         />
                     </div>
                 );
@@ -52,7 +86,7 @@ export default class DefaultTile extends React.Component<any,any> {
                         style={{display: 'flex'}}
                     >
                         <img 
-                            className={"deft-large"}
+                            className={"default-image"}
                             src={image}
                         />
                     </div>
@@ -66,8 +100,8 @@ export default class DefaultTile extends React.Component<any,any> {
                 style={{position: "relative", flexBasis: flexBasis}}
             >
                 <div 
-                    className={"mw-tiles-item"} 
-                    onClick={(e: any) => {parent.tileClicked(this.props.item)}} 
+                    className={"mw-tiles-item default-tile"} 
+                    onClick={(e: any) => {this.itemClicked(e,tile)}} 
                     id={this.props.item} 
                     style={{position: "relative"}}>
                     

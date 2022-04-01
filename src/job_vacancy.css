@@ -1,0 +1,60 @@
+.jobvacancy {
+
+}
+
+.jobvacancy-tile {
+    
+}
+
+.jobvacancy-tile-content {
+    
+}
+
+.jobvacancy-header {
+    padding: 0 1em 1em 1em !important;
+    background-color: #ddd;
+}
+
+.jobvacancy-header-label {
+    color: #333;
+    font-size: 1.3rem;
+}
+
+.jobvacancy-body {
+    padding: 0 1em 1em 1em !important;
+    font-size: 1rem;
+    color: #333;
+}
+
+.jobvacancy-body-text {
+
+}
+
+.jobvacancy-buttonbar {
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.jobvacancy-buttonbar-icon {
+    margin: auto 0rem auto 0.5rem;
+}
+
+.jobvacancy-buttonbar-button {
+    margin: auto 1rem auto 1rem;
+    background-color: #096f48;
+    padding: 0.2rem 1rem;
+    border-radius: 0.3rem;
+    color: #fefefe;
+    cursor: pointer;
+    font-size: 1.1rem
+}
+
+.jobvacancy-buttonbar-button:hover {
+    text-decoration: underline;
+}
+
+.jobvacancy-footer {
+    background-color: #ccc;
+    height: 3rem;
+}

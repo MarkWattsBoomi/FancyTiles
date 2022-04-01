@@ -2,6 +2,7 @@ import { FlowComponent, FlowObjectData } from 'flow-component-model';
 import * as React from 'react';
 import DefaultTile from './default_tile';
 import HotLink from './hot_link';
+import JobVacancy from './job_vacancy';
 import NewsArticle from './news_article';
 import NoticeFrame from './notice_frame';
 import PageIndex from './page_index';
@@ -34,11 +35,16 @@ export default class Tiles extends FlowComponent {
     async tileClicked(tile: FlowObjectData) {
         await this.setStateValue(tile);
         if(this.outcomes.TileClicked) {
-            this.triggerOutcome("TileClicked")
+            this.triggerOutcome("TileClicked");
         }
         else {
-            manywho.engine.sync(this.flowKey);
-        }
+            if(Object.values(this.outcomes).values().next()) {
+                this.triggerOutcome(Object.values(this.outcomes).values().next().value.DeveloperName);
+            }
+            else {
+                manywho.engine.sync(this.flowKey);
+            }
+        }       
     }
 
     render() {
@@ -136,6 +142,17 @@ export default class Tiles extends FlowComponent {
                     componentStyle.marginTop = "3.5rem";
                     tiles.push(
                         <PageIndex
+                            parent={this}
+                            item={tile.internalId}
+                            tilesPerRow={tilesPerRow}
+                        />
+                    );
+                    break;
+
+                case "jobvacancy":
+                    componentStyle.marginTop = "3.5rem";
+                    tiles.push(
+                        <JobVacancy
                             parent={this}
                             item={tile.internalId}
                             tilesPerRow={tilesPerRow}

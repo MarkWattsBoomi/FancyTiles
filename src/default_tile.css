@@ -7,7 +7,30 @@
 .mw-tiles {
     margin-top: 1rem;
 }
+
+.mw-bs .mw-tiles-items {
+    justify-content: center;
+}
+
 .mw-tiles-item {
     overflow: hidden;
 }
 
+.default-tile {
+    cursor: pointer;
+}
+
+.default-tile:hover {
+    box-shadow: 10px 10px 8px 10px #888888;
+}
+
+.default-image {
+    margin: auto;
+    height: 8rem;
+}
+
+.default-icon {
+    margin: auto;
+    color: #000;
+    font-size: 2rem;
+}
