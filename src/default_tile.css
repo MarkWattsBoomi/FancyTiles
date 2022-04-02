@@ -1,21 +1,3 @@
-
-
-.mw-tiles-item-container {
-    height: auto;
-}
-
-.mw-tiles {
-    margin-top: 1rem;
-}
-
-.mw-bs .mw-tiles-items {
-    justify-content: center;
-}
-
-.mw-tiles-item {
-    overflow: hidden;
-}
-
 .default-tile {
     cursor: pointer;
 }

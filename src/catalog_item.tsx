@@ -5,10 +5,14 @@ import './default_tile.css';
 
 declare const manywho: any;
 
-export default class DefaultTile extends React.Component<any,any> {
+export default class CatalogItem extends React.Component<any,any> {
 
     constructor(props: any) {
         super(props);
+    }
+
+    expand(e: any) {
+        
     }
 
     itemClicked(e: any, item: FlowObjectData) {

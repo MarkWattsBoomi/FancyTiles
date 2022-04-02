@@ -1,0 +1,106 @@
+.mw-tiles-item-container {
+    height: auto;
+}
+
+.mw-tiles {
+    margin-top: 1rem;
+}
+
+.mw-bs .mw-tiles-items {
+    justify-content: center;
+}
+
+.mw-tiles-item {
+    overflow: hidden;
+}
+.tiles {
+
+}
+
+.tiles-ribbon {
+    background: transparent;
+    display: flex;
+    height: 4rem;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.tiles-ribbon-left-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    margin: auto;
+    margin-left: 1rem;
+    margin-right: auto;
+    align-items: flex-start;
+}
+
+.tiles-ribbon-right-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    margin: auto;
+    margin-left: auto;
+    margin-right: 1rem;
+    align-items: flex-end;
+}
+
+.tiles-ribbon-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    border: 2px solid #aaa;
+    padding: 0.2rem 0.6rem 0.2rem 0.6rem ;
+}
+
+.tiles-ribbon-icon {
+    font-size: 1.1rem;
+    color: #666;
+    margin: auto;
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.tiles-ribbon-icon:last-of-type {
+    margin-right: 0;
+}
+
+.tiles-ribbon-input {
+    border: none;
+    padding: 0.3rem;
+    font-size: 1rem !important;
+    line-height: 1rem !important;
+    margin-right: 0.5rem !important;
+}
+
+.tiles-ribbon-buttons-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    margin-left: auto;
+}
+
+.tiles-ribbon-button-wrapper {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #666;
+    padding: 0.54rem;
+    margin: auto;
+    margin-right: 0;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+.tiles-ribbon-button-icon {
+    font-size: 1.1rem;
+    color: #666;
+    margin: auto;
+}
+
+.tiles-ribbon-button-label {
+    margin-top: 0.2rem;
+    font-size: 1rem;
+    color: #666;
+}
