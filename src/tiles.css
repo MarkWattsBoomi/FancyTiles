@@ -104,3 +104,95 @@
     font-size: 1rem;
     color: #666;
 }
+
+/*  Footer */
+
+.tiles-footer {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    background-color: #ccc;
+    height: 2rem;
+}
+
+.tiles-footer-summary {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    align-items: center;
+}
+
+.tiles-footer-summary-label {
+    font-size: 1rem;
+    color: #000;
+    padding-left: 1rem;
+}
+
+.tiles-footer-pagination {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    align-items: center;
+    padding: 1rem;
+}
+
+.tiles-footer-pagination-label {
+    font-size: 1rem;
+    color: #000;
+    margin-right: 0.5rem;
+}
+
+.tiles-footer-pagination-button {
+    font-size: 1rem;
+    color: #000;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    top: 0px !important;
+}
+
+.tiles-footer-pagination-button-disabled {
+    color: #666;
+    cursor: default;
+}
+
+.tiles-footer-perpage {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    margin-right: 1rem;
+}
+
+.tiles-footer-perpage-label {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    line-height: 1rem;
+    margin: auto;
+    margin-right: 0.25rem;
+    color: #000;
+}
+
+.tiles-footer-perpage-dropdown {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.tiles-footer-select {
+    line-height: 1rem !important;
+    height: 1.3rem;
+    margin: auto !important;
+    padding-left: 0.5rem !important;
+    padding-right: 1rem !important;
+    flex-grow: 1;
+}
+
+.tiles-footer-spacer {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+
+
+

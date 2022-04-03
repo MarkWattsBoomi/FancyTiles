@@ -1,7 +1,8 @@
-import { FlowObjectData } from 'flow-component-model';
+import { FlowObjectData, FlowOutcome } from 'flow-component-model';
 import * as React from 'react';
 import Tiles from './tiles';
 import './default_tile.css';
+import CommonFunctions from './CommonFunctions';
 
 declare const manywho: any;
 
@@ -9,6 +10,23 @@ export default class DefaultTile extends React.Component<any,any> {
 
     constructor(props: any) {
         super(props);
+        this.state = {enabledOutcomes: []};
+    }
+
+    async componentDidMount(): Promise<void> {
+        const enabledOutcomes: string[] = [];
+        const parent: Tiles = this.props.parent;
+        const objData: FlowObjectData = parent.tiles.get(this.props.item);
+        const keys: string[] = Object.keys(parent.outcomes);
+        for (let pos = 0 ; pos < keys.length ; pos++) {
+            if (parent.outcomes[keys[pos]].isBulkAction === false) {
+                if (await CommonFunctions.assessRowOutcomeRule(parent.outcomes[keys[pos]], objData, parent) === true) {
+                    enabledOutcomes.push(keys[pos]);
+                }
+            }
+        }
+        this.setState({enabledOutcomes});
+        parent.forceUpdate();
     }
 
     itemClicked(e: any, item: FlowObjectData) {
@@ -57,6 +75,48 @@ export default class DefaultTile extends React.Component<any,any> {
             link = tile.properties?.LinkLabel?.value as string;
         }
        
+        let outcomes: any[] = [];
+        Object.keys(parent.outcomes).forEach((key: string) => {
+            if (parent.outcomes[key].isBulkAction === false) {
+                const showOutcome: boolean = this.state.enabledOutcomes.indexOf(key) >= 0;
+
+                if (showOutcome === true) {
+                    let icon: any;
+                    let label: any;
+
+                    if ((!parent.outcomes[key].attributes['display']) || parent.outcomes[key].attributes['display'].value.indexOf('text') >= 0) {
+                        label = (
+                            <span
+                                className="default-outcome-button-element default-outcome-button-label"
+                            >
+                                {parent.outcomes[key].label}
+                            </span>
+                        );
+                    }
+                    if ((parent.outcomes[key].attributes['display']) && parent.outcomes[key].attributes['display'].value.indexOf('icon') >= 0) {
+                        icon = (
+                            <span
+                                className={'default-outcome-button-element default-outcome-button-icon glyphicon glyphicon-' + (parent.outcomes[key].attributes['icon'].value || 'plus')}
+                            />
+                        );
+                    }
+
+                    outcomes.push(
+                        <div
+                            className="default-outcome-button"
+                            title={parent.outcomes[key].label}
+                            onClick={(event: any) => {
+                                parent.doOutcome(parent.outcomes[key], tile);
+                            }}
+                        >
+                            {icon}
+                            {label}
+
+                        </div>,
+                    );
+                }
+            }
+        });
 
         switch(true){
             case image?.indexOf("glyphicon") >=0:
@@ -101,6 +161,11 @@ export default class DefaultTile extends React.Component<any,any> {
                     
                     <div className="mw-tiles-item-header">
                         <h4 title={header}>{header}</h4>
+                        <div
+                            className='default-outcomes'
+                        >
+                            {outcomes}
+                        </div>
                     </div>
                     {content}
                     <div className="mw-tiles-item-footer list-unstyled">
