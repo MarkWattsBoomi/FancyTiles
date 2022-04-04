@@ -1,0 +1,105 @@
+.catalogitem-tile {
+    cursor: pointer;
+    position: relative;
+}
+
+.catalogitem-tile:hover {
+    box-shadow: 10px 10px 8px 10px #888888;
+}
+
+.catalogitem-header {
+    display: flex;
+    flex-direction: column;
+    padding: 0.2rem 0.5rem;
+}
+
+.catalogitem-header-icons {
+    display: flex;
+    flex-direction: row;
+}
+
+.catalogitem-header-title {
+    display: flex;
+    flex-direction: row;
+}
+
+.catalogitem-image {
+    margin: auto;
+    height: 8rem;
+}
+
+.catalogitem-icon {
+    margin: auto;
+    color: #000;
+    font-size: 2rem;
+}
+
+.catalogitem-outcomes {
+    display: flex;
+    flex-direction: row;
+    margin: 8px 0 0 0;
+    flex-grow: 0;
+}
+
+.catalogitem-outcome-button {
+    margin: auto;
+    cursor: pointer;
+}
+
+.catalogitem-outcome-button:hover {
+    color: orange;
+}
+
+.catalogitem-outcome-button-element {
+
+}
+
+.catalogitem-outcome-button-icon {
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+    color: #333;
+}
+
+.catalogitem-outcome-button-label {
+
+}
+
+.catalogitem-title {
+    flex-grow: 1;
+    font-size: 1.4rem;
+    color: #333;
+    text-align: left;
+}
+
+.catalogitem-icon {
+    flex-grow: 0;
+    font-size: 1.8rem;
+    color: #333;
+    margin: auto;
+    margin-right: 0.5rem;
+}
+.catalogitem-label {
+    flex-grow: 1;
+    font-size: 1.2rem;
+    color: #333;
+    text-align: left;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.catalogitem-body {
+    padding: 1rem;
+    font-size: 1rem;
+    color: #333;
+    text-align: center;
+}
+
+.catalogitem-footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.8rem;
+    color: #333;
+    flex-grow: 0;
+}
