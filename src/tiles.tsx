@@ -12,6 +12,7 @@ import Tweet from './tweet';
 import WarmLink from './warm_link';
 import "./tiles.css";
 import TilesFooter from './tiles-footer';
+import CatalogItem from './catalog_item';
 
 declare var manywho: any;
 
@@ -41,6 +42,23 @@ export default class Tiles extends FlowComponent {
         super(props);
 
         this.flowMoved = this.flowMoved.bind(this);
+
+        this.buildRibbon=this.buildRibbon.bind(this);
+        this.calculateValue=this.calculateValue.bind(this);
+        this.callRequest=this.callRequest.bind(this);
+        this.cancelOutcomeForm=this.cancelOutcomeForm.bind(this);
+        this.doOutcome=this.doOutcome.bind(this);
+        this.filterTiles=this.filterTiles.bind(this);
+        this.firstPage=this.firstPage.bind(this);
+        this.getTextValue=this.getTextValue.bind(this);
+        this.globalFilterChanged=this.globalFilterChanged.bind(this);
+        this.lastPage=this.lastPage.bind(this);
+        this.maxPerPageChanged=this.maxPerPageChanged.bind(this);
+        this.nextPage=this.nextPage.bind(this);
+        this.okOutcomeForm=this.okOutcomeForm.bind(this);
+        this.paginateRows=this.paginateRows.bind(this);
+        this.previousPage=this.previousPage.bind(this);
+        this.tileClicked=this.tileClicked.bind(this);
     }
 
     async componentDidMount(): Promise<void> {
@@ -70,6 +88,7 @@ export default class Tiles extends FlowComponent {
         }
 
     }
+
     loadTiles() {
         this.tiles = new Map();
         this.model.dataSource?.items.forEach((tile: FlowObjectData) => {
@@ -117,6 +136,28 @@ export default class Tiles extends FlowComponent {
         this.paginateRows();
     }
 
+    // this goes through currentRowMap and splits them into pages based on maxPageRows
+    paginateRows() {
+        const start: Date = new Date();
+        this.currentPage=0;
+        this.tilePages = [];
+        let currentPage: Map<string, any> = new Map();
+        this.filteredTiles.forEach((item: any, key: string) => {
+            if (currentPage.size < this.maxTilesPerPage) {
+                currentPage.set(key, undefined);
+            } else {
+                this.tilePages.push(currentPage);
+                currentPage = new Map();
+                currentPage.set(key, undefined);
+            }
+        });
+        // add any stragglers
+        this.tilePages.push(currentPage);
+        this.currentPage = 0;
+        const end: Date = new Date();
+        this.forceUpdate();
+    }
+
     async buildRibbon() {
         await this.header?.generateButtons();
         this.forceUpdate();
@@ -128,8 +169,10 @@ export default class Tiles extends FlowComponent {
             this.doOutcome(this.outcomes.TileClicked, tile, false);
         }
         else {
-            if(Object.values(this.outcomes).values().next()) {
-                this.doOutcome(Object.values(this.outcomes).values().next().value,tile,false);
+            let itemOutcomes: FlowOutcome[] = Object.values(this.outcomes).filter((outcome: FlowOutcome) => {return outcome.isBulkAction===false});
+            let firstOutcome: FlowOutcome = itemOutcomes[0];
+            if(firstOutcome) {
+                this.doOutcome(firstOutcome,tile,false);
             }
             else {
                 manywho.engine.sync(this.flowKey);
@@ -174,7 +217,10 @@ export default class Tiles extends FlowComponent {
             }
             this.messageBox.hideMessageBox();
             this.form = null;
-            this.doOutcome(outcome, objData, true);
+            const JSONform: any = JSON.parse(outcome.attributes.form.value);
+            if(!form.noOutcome) {
+                this.doOutcome(outcome, objData, true);
+            }
             this.forceUpdate();
         }
     }
@@ -246,15 +292,24 @@ export default class Tiles extends FlowComponent {
                         form,
                         sft: this,
                     };
+                    let buttons: modalDialogButton[] = [];
+                    
+                    if(form.noOutcome) {
+                        buttons.push(new modalDialogButton('Close', this.cancelOutcomeForm));
+                    }
+                    else {
+                        buttons.push(new modalDialogButton('Ok', this.okOutcomeForm), new modalDialogButton('Cancel', this.cancelOutcomeForm))
+                    }
                     const comp: any = manywho.component.getByName(form.class);
                     const content: any = React.createElement(comp, formProps);
                     this.messageBox.showMessageBox(
-                        form.title, content, [new modalDialogButton('Ok', this.okOutcomeForm), new modalDialogButton('Cancel', this.cancelOutcomeForm)],
+                        form.title, content, buttons
                     );
                     this.forceUpdate();
                     break;
 
                 default:
+                    await this.setStateValue(selectedItem);
                     await this.triggerOutcome(outcome.developerName);
                     break;
             }
@@ -284,27 +339,7 @@ export default class Tiles extends FlowComponent {
         this.forceUpdate();
     }
 
-    // this goes through currentRowMap and splits them into pages based on maxPageRows
-    paginateRows() {
-        const start: Date = new Date();
-        this.currentPage=0;
-        this.tilePages = [];
-        let currentPage: Map<string, any> = new Map();
-        this.filteredTiles.forEach((item: any, key: string) => {
-            if (currentPage.size < this.maxTilesPerPage) {
-                currentPage.set(key, undefined);
-            } else {
-                this.tilePages.push(currentPage);
-                currentPage = new Map();
-                currentPage.set(key, undefined);
-            }
-        });
-        // add any stragglers
-        this.tilePages.push(currentPage);
-        this.currentPage = 0;
-        const end: Date = new Date();
-        this.forceUpdate();
-    }
+    
 
     async firstPage() {
         this.currentPage = 0;
@@ -335,6 +370,7 @@ export default class Tiles extends FlowComponent {
 
         let header: any;
         let componentStyle: React.CSSProperties = {};
+        let itemsStyle: React.CSSProperties = {};
         
         let tiles: any[] = [];
         if (this.tilePages && this.tilePages.length > 0 && this.tilePages[this.currentPage]) {
@@ -440,6 +476,17 @@ export default class Tiles extends FlowComponent {
                         );
                         break;
 
+                    case "catalogitem":
+                        itemsStyle.marginBottom = "1rem";
+                        tiles.push(
+                            <CatalogItem
+                                parent={this}
+                                item={key}
+                                tilesPerRow={tilesPerRow}
+                            />
+                        );
+                        break;
+
                     case "default":
                         tiles.push(
                             <DefaultTile
@@ -481,6 +528,7 @@ export default class Tiles extends FlowComponent {
                 {this.headerElement}
                 <div 
                     className="mw-tiles-items"
+                    style={itemsStyle}
                 >
                     {tiles}
                 </div>

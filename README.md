@@ -24,8 +24,107 @@ NOTE: Visibility based on page conditions is respected.
 
 ## Functionality
 
-Provides all the standard function, look & feel of the OOB tile but with the addition of the ability to display a glyphicon
-or an image in the center of the tile and to have a dissabled overlay
+Provides all the standard function, look & feel of the OOB tile but with the addition of various extended layouts and styles.
+
+It supports both the concept of display columns to map item fields to tile elements and a static Type defintion.
+
+Searching and pagination are also supported.
+
+
+## Component Configuration
+
+### Data Source
+Points to a list of objects, each one representing a tile.
+
+Can be any Type but if not using this static structure, you will need to use DisplayColumns to tell the component how to map the properties.
+
+The Tile type is defined as so: -
+````
+{
+        "developerName": "Tile",
+        "developerSummary": "The definition of a tile",
+        "elementType": "TYPE",
+        "properties": [
+            {
+                "contentType": "ContentString",
+                "developerName": "Title",
+            },
+            {
+                "contentType": "ContentString",
+                "developerName": "Image",
+            },
+            {
+                "contentType": "ContentString",
+                "developerName": "Details",
+            },
+            {
+                "contentType": "ContentString",
+                "developerName": "LinkLabel",
+            },
+            {
+                "contentType": "ContentString",
+                "developerName": "BannerColour",
+            },
+            {
+                "contentType": "ContentList",
+                "developerName": "ChildLinks",
+                "typeElementDeveloperName": "Tile",
+            },
+            {
+                "contentType": "ContentString",
+                "developerName": "ENUM",
+                "id": null,
+            },
+            {
+                "contentType": "ContentList",
+                "developerName": "MenuLinks",
+                "typeElementDeveloperName": "Tile",
+            },
+            {
+                "contentType": "ContentString",
+                "developerName": "ItemValue",
+            },
+            {
+                "contentType": "ContentContent",
+                "developerName": "Content",
+            },
+            {
+                "contentType": "ContentContent",
+                "developerName": "Summary",
+            }
+        ]
+    }
+````
+
+### Model
+
+A single item of the same type as the datasource.
+
+### Data Presentation
+
+Se each tile type for it's specific mappings.
+
+### Attributes
+
+#### TileType
+String.
+The name of a tile type class from the following types below.
+Defaults to a standard tile (DefaultTile).
+
+#### TilesPerRow
+Number.
+The default number of tiles to show per row.
+Defaults to 4.
+
+
+
+# Tile Types
+
+## DefaultTile
+
+
+
+
 
 ## The 2nd display column: -
 

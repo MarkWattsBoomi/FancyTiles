@@ -1,7 +1,8 @@
-import { FlowObjectData } from 'flow-component-model';
+import { FlowObjectData, FlowOutcome } from 'flow-component-model';
 import * as React from 'react';
 import Tiles from './tiles';
-import './default_tile.css';
+import './catalog_item.css';
+import CommonFunctions from './CommonFunctions';
 
 declare const manywho: any;
 
@@ -9,10 +10,23 @@ export default class CatalogItem extends React.Component<any,any> {
 
     constructor(props: any) {
         super(props);
+        this.state = {enabledOutcomes: []};
     }
 
-    expand(e: any) {
-        
+    async componentDidMount(): Promise<void> {
+        const enabledOutcomes: string[] = [];
+        const parent: Tiles = this.props.parent;
+        const objData: FlowObjectData = parent.tiles.get(this.props.item);
+        const keys: string[] = Object.keys(parent.outcomes);
+        for (let pos = 0 ; pos < keys.length ; pos++) {
+            if (parent.outcomes[keys[pos]].isBulkAction === false) {
+                if (await CommonFunctions.assessRowOutcomeRule(parent.outcomes[keys[pos]], objData, parent) === true) {
+                    enabledOutcomes.push(keys[pos]);
+                }
+            }
+        }
+        this.setState({enabledOutcomes});
+        parent.forceUpdate();
     }
 
     itemClicked(e: any, item: FlowObjectData) {
@@ -37,30 +51,114 @@ export default class CatalogItem extends React.Component<any,any> {
             header = tile.properties?.Title?.value as string;
         }
 
-        let image: string;
-        if(parent.model.displayColumns[1]) {
-            image = tile.properties?.[parent.model.displayColumns[1].developerName]?.value as string;
-        }
-        else {
-            image = tile.properties?.Image?.value as string;
-        }
-        
         let details: string;
-        if(parent.model.displayColumns[2]) {
-            details = tile.properties?.[parent.model.displayColumns[2].developerName]?.value as string;
+        if(parent.model.displayColumns[1]) {
+            details = tile.properties?.[parent.model.displayColumns[1].developerName]?.value as string;
         }
         else {
             details = tile.properties?.Details?.value as string;
         }
 
-        let link: string;
-        if(parent.model.displayColumns[3]) {
-            link = tile.properties?.[parent.model.displayColumns[3].developerName]?.value as string;
+        let type: string;
+        let tileStyle: React.CSSProperties = {position: "relative"};
+        let tileIcon: any;
+        let tileLabel: string;
+        if(parent.model.displayColumns[2]) {
+            type = tile.properties?.[parent.model.displayColumns[2].developerName]?.value as string;
         }
         else {
-            link = tile.properties?.LinkLabel?.value as string;
+            type = tile.properties?.LinkLabel?.value as string;
         }
+        switch(type.toLowerCase()) {
+            case "catalog":
+                tileStyle.backgroundColor = "#b3c2f1";
+                tileIcon = (<span className='catalogitem-icon glyphicon glyphicon-book'/>);
+                tileLabel = "PS Catalog Offering";
+                break;
+
+            case "casestudy":
+                tileStyle.backgroundColor = "#fcfdde";
+                tileIcon = (<span className='catalogitem-icon glyphicon glyphicon-briefcase'/>);
+                tileLabel = "User Case Study"
+                break;
+
+            case "customdemo":
+                tileStyle.backgroundColor = "#d2e9df";
+                tileIcon = (<span className='catalogitem-icon glyphicon glyphicon-blackboard'/>);
+                tileLabel = "Demonstration"
+                break;
+
+            case "architecture":
+                tileStyle.backgroundColor = "#edb2c3";
+                tileIcon = (<span className='catalogitem-icon glyphicon glyphicon-education'/>);
+                tileLabel = "Reference Architecture"
+                break;
+        }
+
+        let tileFooter: string;
+        if(parent.model.displayColumns[3]) {
+            tileFooter = tile.properties?.[parent.model.displayColumns[3].developerName]?.value as string;
+        }
+        else {
+            tileFooter = tile.properties?.LinkLabel?.value as string;
+        }
+
+        let image: string;
+        if(parent.model.displayColumns[4]) {
+            image = tile.properties?.[parent.model.displayColumns[3].developerName]?.value as string;
+        }
+        else {
+            image = tile.properties?.Image?.value as string;
+        }
+        
+        
+
+        
        
+        let outcomes: any[] = [];
+        Object.keys(parent.outcomes).forEach((key: string) => {
+            if (parent.outcomes[key].isBulkAction === false) {
+                const showOutcome: boolean = this.state.enabledOutcomes.indexOf(key) >= 0;
+
+                if (showOutcome === true) {
+                    let icon: any;
+                    let label: any;
+
+                    if ((!parent.outcomes[key].attributes['display']) || parent.outcomes[key].attributes['display'].value.indexOf('text') >= 0) {
+                        label = (
+                            <span
+                                className="catalogitem-outcome-button-element catalogitem-outcome-button-label"
+                            >
+                                {parent.outcomes[key].label}
+                            </span>
+                        );
+                    }
+                    if ((parent.outcomes[key].attributes['display']) && parent.outcomes[key].attributes['display'].value.indexOf('icon') >= 0) {
+                        icon = (
+                            <span
+                                className={'catalogitem-outcome-button-element catalogitem-outcome-button-icon glyphicon glyphicon-' + (parent.outcomes[key].attributes['icon'].value || 'plus')}
+                            />
+                        );
+                    }
+
+                    outcomes.push(
+                        <div
+                            className="catalogitem-outcome-button"
+                            title={parent.outcomes[key].label}
+                            onClick={(event: any) => {
+                                event.preventDefault();
+                                event.stopPropagation();
+                                parent.doOutcome(parent.outcomes[key], tile);
+                            }}
+                        >
+                            {icon}
+                            {label}
+
+                        </div>,
+                    );
+                }
+            }
+        });
 
         switch(true){
             case image?.indexOf("glyphicon") >=0:
@@ -70,7 +168,7 @@ export default class CatalogItem extends React.Component<any,any> {
                         style={{display: 'flex'}}
                     >
                         <span 
-                            className={"default-icon glyphicon " + image}
+                            className={"catalogitem-icon glyphicon " + image}
                         />
                     </div>
                 );
@@ -84,7 +182,7 @@ export default class CatalogItem extends React.Component<any,any> {
                         style={{display: 'flex'}}
                     >
                         <img 
-                            className={"default-image"}
+                            className={"catalogitem-image"}
                             src={image}
                         />
                     </div>
@@ -98,17 +196,44 @@ export default class CatalogItem extends React.Component<any,any> {
                 style={{position: "relative", flexBasis: flexBasis}}
             >
                 <div 
-                    className={"mw-tiles-item default-tile"} 
+                    className={"mw-tiles-item catalogitem-tile"} 
                     onClick={(e: any) => {this.itemClicked(e,tile)}} 
                     id={this.props.item} 
-                    style={{position: "relative"}}>
+                    style={tileStyle}>
                     
-                    <div className="mw-tiles-item-header">
-                        <h4 title={header}>{header}</h4>
+                    <div className="catalogitem-header">
+                        <div
+                            className='catalogitem-header-icons'
+                        >
+                            {tileIcon}
+                            <div
+                                className='catalogitem-label'
+                            >
+                                {tileLabel}
+                            </div>
+                            <div
+                                className='catalogitem-outcomes'
+                            >
+                                {outcomes}
+                            </div>
+                        </div>
+                        <div
+                            className='catalogitem-header-title'
+                        >
+                            <span 
+                                className='catalogitem-title'
+                                title={header}
+                            >
+                                {header}
+                            </span>
+                        </div>
+                        
+                        
                     </div>
                     {content}
-                    <div className="mw-tiles-item-footer list-unstyled">
-                        {details}
+                    <div className="catalogitem-body" dangerouslySetInnerHTML={{ __html: details}} />
+                    <div className="catalogitem-footer">
+                        {tileFooter}
                     </div>
                 </div>
             </div>

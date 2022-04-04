@@ -106,6 +106,8 @@ export default class DefaultTile extends React.Component<any,any> {
                             className="default-outcome-button"
                             title={parent.outcomes[key].label}
                             onClick={(event: any) => {
+                                event.preventDefault();
+                                event.stopPropagation();
                                 parent.doOutcome(parent.outcomes[key], tile);
                             }}
                         >

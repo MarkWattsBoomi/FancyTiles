@@ -19,7 +19,7 @@ export default class TilesFooter extends React.Component<any, any> {
     render() {
         const root: Tiles = this.props.root;
 
-        const summary: string = 'Showing ' + root.filteredTiles.size + ' items from a total dataset of ' + root.tiles.size;
+        const summary: string = 'Showing ' + root.filteredTiles?.size + ' items from a total dataset of ' + root.tiles?.size;
         const pag: string = 'page ' + (root.currentPage + 1) + ' of ' + root.tilePages.length;
 
         let firstPage: any;
