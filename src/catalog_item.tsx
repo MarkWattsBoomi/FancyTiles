@@ -61,6 +61,7 @@ export default class CatalogItem extends React.Component<any,any> {
 
         let type: string;
         let tileStyle: React.CSSProperties = {position: "relative"};
+        let footerStyle: React.CSSProperties = {};
         let tileIcon: any;
         let tileLabel: string;
         if(parent.model.displayColumns[2]) {
@@ -72,24 +73,28 @@ export default class CatalogItem extends React.Component<any,any> {
         switch(type.toLowerCase()) {
             case "catalog":
                 tileStyle.backgroundColor = "#b3c2f1";
+                footerStyle.backgroundColor = "#b3c2f1";
                 tileIcon = (<span className='catalogitem-icon glyphicon glyphicon-book'/>);
                 tileLabel = "PS Catalog Offering";
                 break;
 
             case "casestudy":
                 tileStyle.backgroundColor = "#fcfdde";
+                footerStyle.backgroundColor = "#fcfdde";
                 tileIcon = (<span className='catalogitem-icon glyphicon glyphicon-briefcase'/>);
                 tileLabel = "User Case Study"
                 break;
 
             case "customdemo":
                 tileStyle.backgroundColor = "#d2e9df";
+                footerStyle.backgroundColor = "#d2e9df";
                 tileIcon = (<span className='catalogitem-icon glyphicon glyphicon-blackboard'/>);
                 tileLabel = "Demonstration"
                 break;
 
             case "architecture":
                 tileStyle.backgroundColor = "#edb2c3";
+                footerStyle.backgroundColor = "#edb2c3";
                 tileIcon = (<span className='catalogitem-icon glyphicon glyphicon-education'/>);
                 tileLabel = "Reference Architecture"
                 break;
@@ -199,11 +204,14 @@ export default class CatalogItem extends React.Component<any,any> {
                     className={"mw-tiles-item catalogitem-tile"} 
                     onClick={(e: any) => {this.itemClicked(e,tile)}} 
                     id={this.props.item} 
-                    style={tileStyle}>
                     
-                    <div className="catalogitem-header">
+                >
+                    <div 
+                        className="catalogitem-header"
+                    >
                         <div
                             className='catalogitem-header-icons'
+                            style={tileStyle}
                         >
                             {tileIcon}
                             <div
@@ -231,8 +239,14 @@ export default class CatalogItem extends React.Component<any,any> {
                         
                     </div>
                     {content}
-                    <div className="catalogitem-body" dangerouslySetInnerHTML={{ __html: details}} />
-                    <div className="catalogitem-footer">
+                    <div 
+                        className="catalogitem-body" 
+                        dangerouslySetInnerHTML={{ __html: details}} 
+                    />
+                    <div 
+                        className="catalogitem-footer"
+                        style={footerStyle}
+                    >
                         {tileFooter}
                     </div>
                 </div>

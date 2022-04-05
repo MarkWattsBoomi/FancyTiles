@@ -10,17 +10,19 @@
 .catalogitem-header {
     display: flex;
     flex-direction: column;
-    padding: 0.2rem 0.5rem;
+    padding: 0;
 }
 
 .catalogitem-header-icons {
     display: flex;
     flex-direction: row;
+    padding: 0.2rem 0.5rem;
 }
 
 .catalogitem-header-title {
     display: flex;
     flex-direction: row;
+    padding: 0.2rem 0.5rem;
 }
 
 .catalogitem-image {
@@ -37,13 +39,20 @@
 .catalogitem-outcomes {
     display: flex;
     flex-direction: row;
-    margin: 8px 0 0 0;
+    margin: auto;
     flex-grow: 0;
+    flex-shrink: 0;
 }
 
 .catalogitem-outcome-button {
     margin: auto;
     cursor: pointer;
+    display: flex;
+    margin-left: 0.5rem;
+}
+
+.catalogitem-outcome-button:first-of-type{
+    margin-left: 0rem;
 }
 
 .catalogitem-outcome-button:hover {
@@ -56,8 +65,13 @@
 
 .catalogitem-outcome-button-icon {
     font-size: 1.2rem;
-    margin-left: 0.5rem;
+    margin: auto;
     color: #333;
+    top: 0 !important;
+}
+
+.catalogitem-outcome-button-icon:first-of-type{
+    margin-left: 0rem;
 }
 
 .catalogitem-outcome-button-label {
@@ -102,4 +116,6 @@
     font-size: 0.8rem;
     color: #333;
     flex-grow: 0;
+    left: 0;
+    text-align: right;
 }

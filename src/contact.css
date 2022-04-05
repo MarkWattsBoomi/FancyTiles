@@ -1,0 +1,100 @@
+.contact-tile {
+    cursor: pointer;
+}
+
+.contact-tile:hover {
+    box-shadow: 10px 10px 8px 10px #888888;
+}
+
+.contact-body {
+    display: flex;
+    flex-direction: row;
+}
+
+.contact-body-avatar {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    margin: 1rem;
+}
+
+.contact-image {
+    margin: auto;
+    height: 8rem;
+}
+
+.contact-body-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    margin: 1rem;
+}
+
+.contact-body-details-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.contact-body-details-label {
+    font-size: 1rem;
+    color: #333;
+    width: 8rem;
+    margin: auto;
+    margin-left: 0;
+    flex-grow: 0;
+    margin-right: 1rem;
+}
+
+.contact-body-details-group {
+
+}
+
+.contact-body-details-bold {
+    font-size: 1.1rem;
+    color: #333;
+    margin: auto;
+    margin-right: 0.5rem;
+}
+
+.contact-body-details-normal {
+    font-size: 1rem;
+    color: #333;
+    margin: auto;
+    margin-right: 0.5rem;
+}
+
+
+
+.contact-icon {
+    margin: auto;
+    color: #000;
+    font-size: 2rem;
+}
+
+.contact-outcomes {
+    display: flex;
+    flex-direction: row;
+    margin: 8px 0 0 0;
+}
+
+.contact-outcome-button {
+    margin: auto;
+    cursor: pointer;
+}
+
+.contact-outcome-button:hover {
+    color: orange;
+}
+
+.contact-outcome-button-element {
+
+}
+
+.contact-outcome-button-icon {
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+}
+
+.contact-outcome-button-label {
+
+}

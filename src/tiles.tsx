@@ -13,6 +13,7 @@ import WarmLink from './warm_link';
 import "./tiles.css";
 import TilesFooter from './tiles-footer';
 import CatalogItem from './catalog_item';
+import Contact from './contact';
 
 declare var manywho: any;
 
@@ -480,6 +481,17 @@ export default class Tiles extends FlowComponent {
                         itemsStyle.marginBottom = "1rem";
                         tiles.push(
                             <CatalogItem
+                                parent={this}
+                                item={key}
+                                tilesPerRow={tilesPerRow}
+                            />
+                        );
+                        break;
+
+                    case "contact":
+                        itemsStyle.marginBottom = "1rem";
+                        tiles.push(
+                            <Contact
                                 parent={this}
                                 item={key}
                                 tilesPerRow={tilesPerRow}
