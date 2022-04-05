@@ -75,12 +75,47 @@
     margin-right: 0.5rem !important;
 }
 
+.tiles-ribbon-selects-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    margin-right: auto;
+    margin-left: 2rem;
+    padding: 0.2rem 0.6rem 0.2rem 0.6rem;
+}
+
+.tiles-ribbon-select-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 0;
+    margin-right: 2rem;
+}
+
+.tiles-ribbon-select-label {
+    font-size: 1.2rem;
+    color: #333;
+    margin: auto;
+    margin-right: 0.5rem;
+}
+
+.mw-bs select.tiles-ribbon-select {
+    font-size: 1.2rem !important;
+    color: #333 !important;
+    padding: 0.2rem 1.5rem 0.2rem 0.5rem !important;
+}
+
+.mw-bs select.tiles-ribbon-select-option {
+    padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+}
+
 .tiles-ribbon-buttons-wrapper {
     display: flex;
     flex-direction: row;
     flex-grow: 0;
     margin-left: auto;
 }
+
+
 
 .tiles-ribbon-button-wrapper {
     display: flex;
@@ -104,6 +139,8 @@
     font-size: 1rem;
     color: #666;
 }
+
+
 
 /*  Footer */
 

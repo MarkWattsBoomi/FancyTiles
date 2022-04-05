@@ -1,4 +1,4 @@
-import { FlowOutcome } from "flow-component-model";
+import { FlowDisplayColumn, FlowObjectData, FlowOutcome } from "flow-component-model";
 import React, { CSSProperties } from "react";
 import CommonFunctions from "./CommonFunctions";
 import Tiles from "./tiles";
@@ -11,6 +11,8 @@ export default class TilesRibbon extends React.Component<any,any> {
     leftButtons: any[];
     rightButtons: any[];
     deBounce: boolean = false;
+    dropDowns: Map<string,HTMLSelectElement>;
+    dropDownElements: any[];
 
     constructor(props: any) {
         super(props);
@@ -19,10 +21,27 @@ export default class TilesRibbon extends React.Component<any,any> {
         this.filterKeyDown = this.filterKeyDown.bind(this);
         this.filterChanged = this.filterChanged.bind(this);
         this.filterCommitted = this.filterCommitted.bind(this);
+        this.selectsChanged = this.selectsChanged.bind(this);
+        this.setDropdown = this.setDropdown.bind(this);
     }
 
     async componentDidMount() {
         await this.generateButtons();
+        this.selectsChanged=this.selectsChanged.bind(this);
+    }
+
+    setDropdown(key: string, element: any) {
+        if(element) {
+            this.dropDowns.set(key,element);
+        }
+        else {
+            this.dropDowns.delete(key);
+        }
+    }
+
+    selectsChanged(e: any) {
+        const root: Tiles = this.props.root;
+        root.selectsChanged();
     }
 
     async generateButtons(): Promise<any> {
@@ -76,6 +95,60 @@ export default class TilesRibbon extends React.Component<any,any> {
             }
         }
 
+        //use the display cols from parent to add extra filter dropdowns
+        this.dropDownElements = [];
+        this.dropDowns = new Map();
+        root.model.displayColumns.forEach((col: FlowDisplayColumn) => {
+            if(col.visible) {
+                let possibleValues: any[] = [];
+                root.tiles.forEach((tile: FlowObjectData) => {
+                    if(possibleValues.indexOf(tile.properties[col.developerName].value) < 0) {
+                        possibleValues.push(tile.properties[col.developerName].value);
+                    }
+                });
+                possibleValues=possibleValues.sort();
+                let options: any[] = [];
+                options.push(
+                    <option
+                        className="tiles-ribbon-select-option"
+                        value={"*"}
+                    >
+                        Any
+                    </option>
+                );
+                possibleValues.forEach((value: any) => {
+                    options.push(
+                        <option
+                            className="tiles-ribbon-select-option"
+                            value={(value + "" ).toLowerCase()}
+                        >
+                            {value}
+                        </option>
+                    );
+                });
+                this.dropDownElements.push(
+                    <div
+                        className="tiles-ribbon-select-wrapper"
+                    >
+                        <span
+                            className="tiles-ribbon-select-label"
+                        >
+                            {col.label}
+                        </span>
+                        <select
+                            id={col.developerName}
+                            key={col.developerName}
+                            className="tiles-ribbon-select"
+                            onChange={this.selectsChanged}
+                            ref={(element: HTMLSelectElement) => {this.setDropdown(col.developerName, element)}}
+                        >
+                            {options}
+                        </select>
+                    </div>
+                    
+                );
+            }
+        });
         this.deBounce = false;
         this.forceUpdate();
         return true;
@@ -170,6 +243,12 @@ export default class TilesRibbon extends React.Component<any,any> {
                             onClick={this.clearSearch}
                         />
                     </div>
+                    <div
+                        className="tiles-ribbon-selects-wrapper"
+                    >
+                        {this.dropDownElements}
+                    </div>
+                    
                 </div>
                 <div
                     className="tiles-ribbon-right-wrapper"

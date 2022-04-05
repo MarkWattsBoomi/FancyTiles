@@ -53,6 +53,7 @@ export default class Tiles extends FlowComponent {
         this.firstPage=this.firstPage.bind(this);
         this.getTextValue=this.getTextValue.bind(this);
         this.globalFilterChanged=this.globalFilterChanged.bind(this);
+        this.selectsChanged=this.selectsChanged.bind(this);
         this.lastPage=this.lastPage.bind(this);
         this.maxPerPageChanged=this.maxPerPageChanged.bind(this);
         this.nextPage=this.nextPage.bind(this);
@@ -130,6 +131,16 @@ export default class Tiles extends FlowComponent {
             else {
                 matches=true;
             }
+            if(this.header && this.header.dropDowns.size>0){
+                this.header.dropDowns.forEach((dropDown: HTMLSelectElement) => {
+                    if(dropDown.options[dropDown.selectedIndex].value !== "*") {
+                        if((tile.properties[dropDown.id].value + "").toLowerCase() !== dropDown.options[dropDown.selectedIndex].value.toLowerCase()) {
+                            matches=false;
+                        }
+                    }
+                })
+            }
+
             if(matches === true) {
                 this.filteredTiles.set(tile.internalId, tile);
             }
@@ -333,6 +344,10 @@ export default class Tiles extends FlowComponent {
         this.filterTiles();
     }
 
+    selectsChanged() {
+        this.filterTiles();
+    }
+
     maxPerPageChanged(max: number) {
         this.maxTilesPerPage = max || 10;
         localStorage.setItem('tiles-max-' + this.componentId, this.maxTilesPerPage.toString());
@@ -388,6 +403,7 @@ export default class Tiles extends FlowComponent {
                         break;
 
                     case "hotlink":
+                        itemsStyle.justifyContent = "left";
                         tiles.push(
                             <HotLink
                                 parent={this}
@@ -398,6 +414,7 @@ export default class Tiles extends FlowComponent {
                         break;
 
                     case "warmlink":
+                        itemsStyle.justifyContent = "left";
                         tiles.push(
                             <WarmLink
                                 parent={this}
