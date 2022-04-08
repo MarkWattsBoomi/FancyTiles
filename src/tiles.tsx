@@ -86,6 +86,7 @@ export default class Tiles extends FlowComponent {
                 this.retries = 0;
                 this.maxTilesPerPage = parseInt(localStorage.getItem('tiles-max-' + this.componentId));
                 if(isNaN(this.maxTilesPerPage)) this.maxTilesPerPage = parseInt(this.getAttribute('PaginationSize', "10"));
+                this.loadTiles();
             }
         }
 

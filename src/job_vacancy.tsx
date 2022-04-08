@@ -2,6 +2,7 @@ import { FlowObjectData, FlowObjectDataArray } from 'flow-component-model';
 import * as React from 'react';
 import Tiles from './tiles';
 import './job_vacancy.css';
+import CommonFunctions from './CommonFunctions';
 
 declare const manywho: any;
 
@@ -12,6 +13,23 @@ export default class JobVacancy extends React.Component<any,any> {
     constructor(props: any) {
         super(props);
         this.itemClicked=this.itemClicked.bind(this);
+        this.state = {enabledOutcomes: []};
+    }
+
+    async componentDidMount(): Promise<void> {
+        const enabledOutcomes: string[] = [];
+        const parent: Tiles = this.props.parent;
+        const objData: FlowObjectData = parent.tiles.get(this.props.item);
+        const keys: string[] = Object.keys(parent.outcomes);
+        for (let pos = 0 ; pos < keys.length ; pos++) {
+            if (parent.outcomes[keys[pos]].isBulkAction === false) {
+                if (await CommonFunctions.assessRowOutcomeRule(parent.outcomes[keys[pos]], objData, parent) === true) {
+                    enabledOutcomes.push(keys[pos]);
+                }
+            }
+        }
+        this.setState({enabledOutcomes});
+        parent.forceUpdate();
     }
 
     itemClicked(e: any, item: FlowObjectData) {
@@ -26,6 +44,51 @@ export default class JobVacancy extends React.Component<any,any> {
         let parent: Tiles = this.props.parent;
         let tile: FlowObjectData = parent.tiles.get(this.props.item);
         let flexBasis: string = Math.floor(((100 / this.props.tilesPerRow)-1)) + "%";
+
+        let outcomes: any[] = [];
+        Object.keys(parent.outcomes).forEach((key: string) => {
+            if (parent.outcomes[key].isBulkAction === false) {
+                const showOutcome: boolean = this.state.enabledOutcomes.indexOf(key) >= 0;
+
+                if (showOutcome === true) {
+                    let icon: any;
+                    let label: any;
+
+                    if ((!parent.outcomes[key].attributes['display']) || parent.outcomes[key].attributes['display'].value.indexOf('text') >= 0) {
+                        label = (
+                            <span
+                                className="jobvacancy-buttonbar-button"
+                            >
+                                {parent.outcomes[key].label}
+                            </span>
+                        );
+                    }
+                    if ((parent.outcomes[key].attributes['display']) && parent.outcomes[key].attributes['display'].value.indexOf('icon') >= 0) {
+                        icon = (
+                            <span
+                                className={'default-outcome-button-element default-outcome-button-icon glyphicon glyphicon-' + (parent.outcomes[key].attributes['icon'].value || 'plus')}
+                            />
+                        );
+                    }
+
+                    outcomes.push(
+                        <div
+                            className="jobvacancy-buttonbar-buttons"
+                            title={parent.outcomes[key].label}
+                            onClick={(event: any) => {
+                                event.preventDefault();
+                                event.stopPropagation();
+                                parent.doOutcome(parent.outcomes[key], tile);
+                            }}
+                        >
+                            {icon}
+                            {label}
+
+                        </div>,
+                    );
+                }
+            }
+        });
         
         let header: any = (
             <div
@@ -98,12 +161,8 @@ export default class JobVacancy extends React.Component<any,any> {
                                 width="36" 
                                 height="36"
                             />
-                            <span
-                                className='jobvacancy-buttonbar-button'
-                                onClick={(e: any) => {this.itemClicked(e,tile)}}
-                            >
-                                Apply online
-                            </span>
+                            {outcomes}
+                            
                             
 
                         </div>

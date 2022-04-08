@@ -68,7 +68,9 @@ export default class Contact extends React.Component<any,any> {
         }
 
         let dateOfBirth: string;
+        let dateOfBirthLabel: string = "D.o.B";
         if(parent.model.displayColumns[3]) {
+            dateOfBirthLabel=parent.model.displayColumns[3].label;
             dateOfBirth = tile.properties?.[parent.model.displayColumns[3].developerName]?.value as string;
         }
         else {
@@ -76,7 +78,9 @@ export default class Contact extends React.Component<any,any> {
         }
 
         let nino: string;
+        let ninoLabel: string = "NINO";
         if(parent.model.displayColumns[4]) {
+            ninoLabel=parent.model.displayColumns[4].label;
             nino = tile.properties?.[parent.model.displayColumns[4].developerName]?.value as string;
         }
         else {
@@ -84,7 +88,9 @@ export default class Contact extends React.Component<any,any> {
         }
 
         let position: string;
+        let positionLabel: string = "New Position";
         if(parent.model.displayColumns[5]) {
+            positionLabel=parent.model.displayColumns[5].label;
             position = tile.properties?.[parent.model.displayColumns[5].developerName]?.value as string;
         }
         else {
@@ -219,7 +225,7 @@ export default class Contact extends React.Component<any,any> {
                             <div
                                 className='contact-body-details-row'
                             >
-                                <span className='contact-body-details-label'>D.o.B:</span>
+                                <span className='contact-body-details-label'>{dateOfBirthLabel + ":"}</span>
                                 <div
                                     className='contact-body-details-group'
                                 >
@@ -229,7 +235,7 @@ export default class Contact extends React.Component<any,any> {
                             <div
                                 className='contact-body-details-row'
                             >
-                                <span className='contact-body-details-label'>NINO:</span>
+                                <span className='contact-body-details-label'>{ninoLabel + ":"}</span>
                                 <div
                                     className='contact-body-details-group'
                                 >
@@ -239,7 +245,7 @@ export default class Contact extends React.Component<any,any> {
                             <div
                                 className='contact-body-details-row'
                             >
-                                <span className='contact-body-details-label'>New Position:</span>
+                                <span className='contact-body-details-label'>{positionLabel + ":"}</span>
                                 <div
                                     className='contact-body-details-group'
                                 >

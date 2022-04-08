@@ -40,6 +40,11 @@
     margin: auto 0rem auto 0.5rem;
 }
 
+.jobvacancy-buttonbar-buttons {
+    margin: auto;
+    margin-left: 1rem;
+}
+
 .jobvacancy-buttonbar-button {
     margin: auto 1rem auto 1rem;
     background-color: #096f48;
