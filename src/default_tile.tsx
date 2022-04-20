@@ -43,37 +43,38 @@ export default class DefaultTile extends React.Component<any,any> {
         let flexBasis: string = Math.floor((90 / this.props.tilesPerRow)) + "%";
         
         let content: any = null;
-        let header: string;
-        if(parent.model.displayColumns[0]) {
-            header = tile.properties?.[parent.model.displayColumns[0].developerName]?.value as string;
-        }
-        else {
-            header = tile.properties?.Title?.value as string;
-        }
-
-        let image: string;
-        if(parent.model.displayColumns[1]) {
-            image = tile.properties?.[parent.model.displayColumns[1].developerName]?.value as string;
-        }
-        else {
-            image = tile.properties?.Image?.value as string;
-        }
         
-        let details: string;
-        if(parent.model.displayColumns[2]) {
-            details = tile.properties?.[parent.model.displayColumns[2].developerName]?.value as string;
-        }
-        else {
-            details = tile.properties?.Details?.value as string;
-        }
+        let header: string = CommonFunctions.getAttributeValue(parent, tile, "title");
+        //if(parent.model.displayColumns[0]) {
+        //    header = tile.properties?.[parent.model.displayColumns[0].developerName]?.value as string;
+        //}
+        //else {
+        //    header = tile.properties?.Title?.value as string;
+        //}
 
-        let link: string;
-        if(parent.model.displayColumns[3]) {
-            link = tile.properties?.[parent.model.displayColumns[3].developerName]?.value as string;
-        }
-        else {
-            link = tile.properties?.LinkLabel?.value as string;
-        }
+        let image: string = CommonFunctions.getAttributeValue(parent, tile, "image");;
+        //if(parent.model.displayColumns[1]) {
+        //    image = tile.properties?.[parent.model.displayColumns[1].developerName]?.value as string;
+        //}
+        //else {
+        //    image = tile.properties?.Image?.value as string;
+        //}
+        
+        let details: string = CommonFunctions.getAttributeValue(parent, tile, "detail");;
+        //if(parent.model.displayColumns[2]) {
+        //    details = tile.properties?.[parent.model.displayColumns[2].developerName]?.value as string;
+        //}
+        //else {
+        //    details = tile.properties?.Details?.value as string;
+        //}
+
+        let link: string = CommonFunctions.getAttributeValue(parent, tile, "link");;
+        //if(parent.model.displayColumns[3]) {
+        //    link = tile.properties?.[parent.model.displayColumns[3].developerName]?.value as string;
+        //}
+        //else {
+        //    link = tile.properties?.LinkLabel?.value as string;
+        //}
        
         let outcomes: any[] = [];
         Object.keys(parent.outcomes).forEach((key: string) => {
@@ -170,9 +171,10 @@ export default class DefaultTile extends React.Component<any,any> {
                         </div>
                     </div>
                     {content}
-                    <div className="mw-tiles-item-footer list-unstyled">
-                        {details}
-                    </div>
+                    <div 
+                        className="mw-tiles-item-footer list-unstyled"
+                        dangerouslySetInnerHTML={{ __html: details }} 
+                    />
                 </div>
             </div>
         );

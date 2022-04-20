@@ -14,6 +14,7 @@ import "./tiles.css";
 import TilesFooter from './tiles-footer';
 import CatalogItem from './catalog_item';
 import Contact from './contact';
+import CommonFunctions from './CommonFunctions';
 
 declare var manywho: any;
 
@@ -123,6 +124,12 @@ export default class Tiles extends FlowComponent {
         this.tiles.forEach((tile: FlowObjectData) => {
             let matches: Boolean = false;
             if(this.globalFilter && this.globalFilter.length > 0) {
+                if(CommonFunctions.getAttributeValue(this,tile,"title").toLowerCase().indexOf(this.globalFilter)>= 0) {
+                    matches=true;
+                }
+                if(CommonFunctions.getAttributeValue(this,tile,"detail").toLowerCase().indexOf(this.globalFilter)>= 0) {
+                    matches=true;
+                }
                 this.model.displayColumns.forEach((col: FlowDisplayColumn) => {
                     if((tile.properties[col.developerName].value + "").toLowerCase().indexOf(this.globalFilter)>= 0) {
                         matches=true;

@@ -201,4 +201,71 @@ export default class CommonFunctions {
         }
         return result;
     }
+
+    static getAttributeValue(tiles: Tiles, tile: FlowObjectData, attribute: string) : string {
+        let attributeName: string = "";
+        
+
+        //default to the display column order
+        switch(attribute.toLowerCase()) {
+            case "title":
+                //are we given the explicit column ?
+                if (tiles.getAttribute("TitleColumn") !== null) {
+                    return tile.properties?.[tiles.getAttribute("TitleColumn")]?.value as string;
+                }
+                else {
+                    if(tiles.model.displayColumns[0]) {
+                        return tile.properties?.[tiles.model.displayColumns[0].developerName]?.value as string;
+                    }
+                    else {
+                        return tile.properties?.Title?.value as string;
+                    }
+                }
+
+            case "image":
+                //are we given the explicit column ?
+                if (tiles.getAttribute("ImageColumn") !== null) {
+                    return tile.properties?.[tiles.getAttribute("ImageColumn")]?.value as string;
+                }
+                else {
+                    if(tiles.model.displayColumns[1]) {
+                        return tile.properties?.[tiles.model.displayColumns[1].developerName]?.value as string;
+                    }
+                    else {
+                        return tile.properties?.Image?.value as string;
+                    }
+                }
+                
+            case "detail":
+                //are we given the explicit column ?
+                if (tiles.getAttribute("DetailsColumn") !== null) {
+                    return tile.properties?.[tiles.getAttribute("DetailsColumn")]?.value as string;
+                }
+                else {
+                    if(tiles.model.displayColumns[2]) {
+                        return tile.properties?.[tiles.model.displayColumns[2].developerName]?.value as string;
+                    }
+                    else {
+                        return tile.properties?.Details?.value as string;
+                    }
+                }
+
+            case "link":
+                //are we given the explicit column ?
+                if (tiles.getAttribute("LinkColumn") !== null) {
+                    return tile.properties?.[tiles.getAttribute("LinkColumn")]?.value as string;
+                }
+                else {
+                    if(tiles.model.displayColumns[3]) {
+                        return tile.properties?.[tiles.model.displayColumns[3].developerName]?.value as string;
+                    }
+                    else {
+                        return tile.properties?.LinkLabel?.value as string;
+                    }
+                }
+    
+                      
+        }
+        
+    }
 }

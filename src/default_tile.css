@@ -9,6 +9,8 @@
 .default-image {
     margin: auto;
     height: 8rem;
+    max-width: 14rem;
+    object-fit: scale-down;
 }
 
 .default-icon {
