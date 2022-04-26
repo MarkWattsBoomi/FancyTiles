@@ -75,7 +75,7 @@ export default class CatalogItem extends React.Component<any,any> {
                 tileStyle.backgroundColor = "#b3c2f1";
                 footerStyle.backgroundColor = "#b3c2f1";
                 tileIcon = (<span className='catalogitem-icon glyphicon glyphicon-book'/>);
-                tileLabel = "PS Catalog Offering";
+                tileLabel = "Presales Catalog";
                 break;
 
             case "casestudy":

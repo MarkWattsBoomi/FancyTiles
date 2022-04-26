@@ -210,7 +210,7 @@ export default class CommonFunctions {
         switch(attribute.toLowerCase()) {
             case "title":
                 //are we given the explicit column ?
-                if (tiles.getAttribute("TitleColumn") !== null) {
+                if (tiles.getAttribute("TitleColumn")?.length) {
                     return tile.properties?.[tiles.getAttribute("TitleColumn")]?.value as string;
                 }
                 else {
@@ -224,7 +224,7 @@ export default class CommonFunctions {
 
             case "image":
                 //are we given the explicit column ?
-                if (tiles.getAttribute("ImageColumn") !== null) {
+                if (tiles.getAttribute("ImageColumn")?.length) {
                     return tile.properties?.[tiles.getAttribute("ImageColumn")]?.value as string;
                 }
                 else {
@@ -238,7 +238,7 @@ export default class CommonFunctions {
                 
             case "detail":
                 //are we given the explicit column ?
-                if (tiles.getAttribute("DetailsColumn") !== null) {
+                if (tiles.getAttribute("DetailsColumn")?.length) {
                     return tile.properties?.[tiles.getAttribute("DetailsColumn")]?.value as string;
                 }
                 else {
@@ -252,7 +252,7 @@ export default class CommonFunctions {
 
             case "link":
                 //are we given the explicit column ?
-                if (tiles.getAttribute("LinkColumn") !== null) {
+                if (tiles.getAttribute("LinkColumn")?.length) {
                     return tile.properties?.[tiles.getAttribute("LinkColumn")]?.value as string;
                 }
                 else {
