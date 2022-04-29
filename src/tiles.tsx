@@ -544,12 +544,19 @@ export default class Tiles extends FlowComponent {
             );
         }
 
-        let className = manywho.styling.getClasses(
-            this.props.parentId,
-            this.props.id,
-            'tiles',
-            this.props.flowKey,
-        ).join(' ');
+        let className = "";
+        try {
+            let className = manywho.styling.getClasses(
+                this.props.parentId,
+                this.props.id,
+                'tiles',
+                this.props.flowKey,
+            ).join(' ');
+        }
+        catch(e) {
+            
+        }
+
 
         return (
             <div 
