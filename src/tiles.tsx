@@ -321,7 +321,10 @@ export default class Tiles extends FlowComponent {
                         buttons.push(new modalDialogButton('Ok', this.okOutcomeForm), new modalDialogButton('Cancel', this.cancelOutcomeForm))
                     }
                     const comp: any = manywho.component.getByName(form.class);
-                    const content: any = React.createElement(comp, formProps);
+                    let content: any;
+                    if(comp) {
+                        content = React.createElement(comp, formProps);
+                    } 
                     this.messageBox.showMessageBox(
                         form.title, content, buttons
                     );
@@ -546,7 +549,7 @@ export default class Tiles extends FlowComponent {
 
         let className = "";
         try {
-            let className = manywho.styling.getClasses(
+            className = manywho.styling.getClasses(
                 this.props.parentId,
                 this.props.id,
                 'tiles',
@@ -554,7 +557,7 @@ export default class Tiles extends FlowComponent {
             ).join(' ');
         }
         catch(e) {
-            
+            className = "mw-tiles";
         }
 
 
