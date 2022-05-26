@@ -1,0 +1,14 @@
+.mw-tiles-item-container.tt-container {
+    width: fit-content;
+    height: fit-content;
+    border: 3px solid transparent;
+}
+
+.mw-tiles-item-container.tt-container.tt-selected {
+    border: 3px solid #5872a8;
+}
+
+.tt-body {
+    display: flex;
+    justify-content: center;
+}

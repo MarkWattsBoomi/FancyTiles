@@ -15,6 +15,7 @@ import TilesFooter from './tiles-footer';
 import CatalogItem from './catalog_item';
 import Contact from './contact';
 import CommonFunctions from './CommonFunctions';
+import TinyTile from './tiny_tile';
 
 declare var manywho: any;
 
@@ -39,6 +40,8 @@ export default class Tiles extends FlowComponent {
     form: any;  // this is the form being shown by the message box
     globalFilter: string;
     retries: number = 0;
+
+    selectedTile: string;
 
     constructor(props: any) {
         super(props);
@@ -69,6 +72,7 @@ export default class Tiles extends FlowComponent {
         (manywho as any).eventManager.addDoneListener(this.flowMoved, this.componentId);
         this.maxTilesPerPage = parseInt(localStorage.getItem('tiles-max-' + this.componentId));
         if(isNaN(this.maxTilesPerPage)) this.maxTilesPerPage = parseInt(this.getAttribute('PaginationSize', "10"));
+        this.selectedTile=(this.getStateValue() as FlowObjectData)?.internalId; 
         this.loadTiles();        
     }
 
@@ -87,6 +91,7 @@ export default class Tiles extends FlowComponent {
                 this.retries = 0;
                 this.maxTilesPerPage = parseInt(localStorage.getItem('tiles-max-' + this.componentId));
                 if(isNaN(this.maxTilesPerPage)) this.maxTilesPerPage = parseInt(this.getAttribute('PaginationSize', "10"));
+                this.selectedTile=(this.getStateValue() as FlowObjectData)?.internalId; 
                 this.loadTiles();
             }
         }
@@ -225,7 +230,7 @@ export default class Tiles extends FlowComponent {
     async okOutcomeForm() {
         if (this.form.validate() === true) {
             const objData: FlowObjectData = await this.form?.makeObjectData();
-            const objDataId: string = this.form.props.objData;
+            const objDataId: FlowObjectData = this.form.props.objData;
             const outcome: FlowOutcome = this.form.props.outcome;
             const form: any = this.form.props.form;
             if (form.state && objData) {
@@ -239,7 +244,7 @@ export default class Tiles extends FlowComponent {
             this.form = null;
             const JSONform: any = JSON.parse(outcome.attributes.form.value);
             if(!form.noOutcome) {
-                this.doOutcome(outcome, objData, true);
+                this.doOutcome(outcome, objData || objDataId, true);
             }
             this.forceUpdate();
         }
@@ -247,6 +252,9 @@ export default class Tiles extends FlowComponent {
 
     async doOutcome(outcome: FlowOutcome, selectedItem: FlowObjectData, ignoreRules?: boolean) {
         let objData: FlowObjectData;
+        if (selectedItem) {
+            await this.setStateValue(selectedItem);
+        }
         if (outcome) {
             switch (true) {
                 // does it have a uri attribute ?
@@ -403,6 +411,18 @@ export default class Tiles extends FlowComponent {
         if (this.tilePages && this.tilePages.length > 0 && this.tilePages[this.currentPage]) {
             this.tilePages[this.currentPage].forEach((xtile: FlowObjectData, key: string) => {
                 switch(tiletype) {
+
+                    case "tinytile":
+                        itemsStyle.justifyContent="left"
+                        tiles.push(
+                            <TinyTile
+                                parent={this}
+                                item={key}
+                                tilesPerRow={tilesPerRow}
+                            />
+                        );
+                        break;
+
                     case "picturearticle":
                         tiles.push(
                             <PictureArticle
