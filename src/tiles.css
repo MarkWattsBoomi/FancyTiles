@@ -230,6 +230,37 @@
     flex-grow: 1;
 }
 
+.sft-dlg {
+    display: flex;
+    flex-direction: column;
+}
+
+.sft-dlg-body {
+    display: flex;
+    flex-direction: row;
+}
+
+.sft-dlg-body-icon {
+    display: flex;
+    flex-direction: column;
+}
+
+.sft-dlg-body-message {
+    display: flex;
+    flex-direction: column;
+}
+
+.sft-dlg-row {
+    margin: auto;
+    font-size: 1rem;
+    color: #000;
+}
+
+.sft-dlg-icon {
+    margin: auto;
+    font-size: 2rem;
+    padding-right: 1rem;
+}
 
 
 
