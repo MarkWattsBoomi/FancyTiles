@@ -16,6 +16,8 @@ import CatalogItem from './catalog_item';
 import Contact from './contact';
 import CommonFunctions from './CommonFunctions';
 import TinyTile from './tiny_tile';
+import WebShopItem from './web_shop_item';
+import NavMenu from './nav_menu';
 
 declare var manywho: any;
 
@@ -62,6 +64,7 @@ export default class Tiles extends FlowComponent {
         this.maxPerPageChanged=this.maxPerPageChanged.bind(this);
         this.nextPage=this.nextPage.bind(this);
         this.okOutcomeForm=this.okOutcomeForm.bind(this);
+        this.customOutcomeForm=this.customOutcomeForm.bind(this);
         this.paginateRows=this.paginateRows.bind(this);
         this.previousPage=this.previousPage.bind(this);
         this.tileClicked=this.tileClicked.bind(this);
@@ -102,6 +105,9 @@ export default class Tiles extends FlowComponent {
         this.tiles = new Map();
         this.model.dataSource?.items.forEach((tile: FlowObjectData) => {
             this.tiles.set(tile.internalId, tile);
+            if(tile.isSelected === true) {
+                this.selectedTile = tile.internalId;
+            }
         });
 
         this.header = undefined;
@@ -250,6 +256,28 @@ export default class Tiles extends FlowComponent {
         }
     }
 
+    async customOutcomeForm(outcomeName: string) {
+        if (this.form.validate() === true) {
+            const objData: FlowObjectData = await this.form?.makeObjectData();
+            const objDataId: FlowObjectData = this.form.props.objData;
+            const outcome: FlowOutcome = this.outcomes[outcomeName];
+            const form: any = this.form.props.form;
+            if (outcome.attributes["state"] && objData) {
+                const state: FlowField = await this.loadValue(outcome.attributes["state"].value);
+                if (state) {
+                    state.value = objData;
+                    await this.updateValues(state);
+                }
+            }
+            this.messageBox.hideMessageBox();
+            this.form = null;
+            if(outcome) {
+                this.doOutcome(outcome, null, true);
+            }
+            this.forceUpdate();
+        }
+    }
+
     async doOutcome(outcome: FlowOutcome, selectedItem: FlowObjectData, ignoreRules?: boolean) {
         let objData: FlowObjectData;
         if (selectedItem) {
@@ -322,11 +350,38 @@ export default class Tiles extends FlowComponent {
                     };
                     let buttons: modalDialogButton[] = [];
                     
-                    if(form.noOutcome) {
-                        buttons.push(new modalDialogButton('Close', this.cancelOutcomeForm));
-                    }
-                    else {
-                        buttons.push(new modalDialogButton('Ok', this.okOutcomeForm), new modalDialogButton('Cancel', this.cancelOutcomeForm))
+                    switch(true) {
+                        case form.noOutcome:
+                            buttons.push(new modalDialogButton('Close', this.cancelOutcomeForm));
+                            break;
+
+                        case form.outcomes && form.outcomes.length > 0:
+                            let outcomes: modalDialogButton[] = [];
+                            let customOutcomeForm = this.customOutcomeForm;
+                            form.outcomes.forEach((outcome: any) =>{
+                                let func: any;
+                                if(outcome.developerName) {
+                                    if(this.outcomes[outcome.developerName]) {
+                                        func = function(){customOutcomeForm(outcome.developerName)};
+                                    }
+                                    else {
+                                        console.log("Outcome [" + outcome.developerName + "] not attached to this component");
+                                        func = this.cancelOutcomeForm;
+                                    }
+                                }
+                                else {
+                                    func = this.cancelOutcomeForm;
+                                }
+                                buttons.push(
+                                    new modalDialogButton(outcome.label, func)
+                                );
+                            });
+                            
+                            break;
+
+                        default:
+                            buttons.push(new modalDialogButton('Ok', this.okOutcomeForm), new modalDialogButton('Cancel', this.cancelOutcomeForm));
+                            break;
                     }
                     const comp: any = manywho.component.getByName(form.class);
                     let content: any;
@@ -416,6 +471,17 @@ export default class Tiles extends FlowComponent {
                         itemsStyle.justifyContent="left"
                         tiles.push(
                             <TinyTile
+                                parent={this}
+                                item={key}
+                                tilesPerRow={tilesPerRow}
+                            />
+                        );
+                        break;
+
+                    case "navmenu":
+                        itemsStyle.justifyContent="left"
+                        tiles.push(
+                            <NavMenu
                                 parent={this}
                                 item={key}
                                 tilesPerRow={tilesPerRow}
@@ -540,6 +606,18 @@ export default class Tiles extends FlowComponent {
                         itemsStyle.marginBottom = "1rem";
                         tiles.push(
                             <Contact
+                                parent={this}
+                                item={key}
+                                tilesPerRow={tilesPerRow}
+                            />
+                        );
+                        break;
+
+                    case "webshop":
+                        itemsStyle.marginBottom = "1rem";
+                        itemsStyle.justifyContent = "left";
+                        tiles.push(
+                            <WebShopItem
                                 parent={this}
                                 item={key}
                                 tilesPerRow={tilesPerRow}

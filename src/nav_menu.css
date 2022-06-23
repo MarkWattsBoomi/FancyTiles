@@ -1,0 +1,24 @@
+
+.mw-tiles-item-container.nm-container {
+    width: 100%;
+    height: 6rem;
+    border: 3px solid #ccc;
+}
+
+.mw-tiles-item-container.nm-container.nm-selected {
+    border: 3px solid #5872a8;
+}
+
+.nm-body {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+}
+
+.nm-body h4 {
+    margin: auto;
+    font-size: 1.2rem;
+    white-space: break-spaces;
+    text-align: center;
+}
