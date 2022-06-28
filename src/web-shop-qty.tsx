@@ -27,22 +27,11 @@ export default class WebShopQty extends React.Component<any,any> {
         let newQty: number = e.currentTarget.value;
         let objData: FlowObjectData = this.props.objData;
         let stock: number = objData.properties?.Stock?.value as number;
-
-        if(newQty < 1) {
-            newQty = 1;
-        }
-        if(newQty > stock){
-            newQty = stock;
-        }
         this.setState({qty: newQty});
     }
 
     addOne(e: any) {
-        let objData: FlowObjectData = this.props.objData;
-        let stock: number = objData.properties?.Stock?.value as number;
-        if(this.state.qty < stock) {
-            this.setState({qty: this.state.qty + 1})
-        }
+        this.setState({qty: this.state.qty + 1})
     }
 
     removeOne(e: any) {
@@ -67,7 +56,13 @@ export default class WebShopQty extends React.Component<any,any> {
         objData.addProperty(FlowObjectDataProperty.newInstance("PartNumber",eContentType.ContentString,origObjData.properties.PartNumber.value));
         objData.addProperty(FlowObjectDataProperty.newInstance("Title",eContentType.ContentString,origObjData.properties.Title.value));
         objData.addProperty(FlowObjectDataProperty.newInstance("Price",eContentType.ContentNumber,origObjData.properties.Price.value));
-        objData.addProperty(FlowObjectDataProperty.newInstance("Quantity",eContentType.ContentNumber,this.state.qty))
+        objData.addProperty(FlowObjectDataProperty.newInstance("Quantity",eContentType.ContentNumber,this.state.qty));
+        objData.addProperty(FlowObjectDataProperty.newInstance("Stock",eContentType.ContentNumber,origObjData.properties.Stock.value));
+        objData.addProperty(FlowObjectDataProperty.newInstance("Info1",eContentType.ContentString,origObjData.properties.Info1.value));
+        objData.addProperty(FlowObjectDataProperty.newInstance("Info2",eContentType.ContentString,origObjData.properties.Info2.value));
+        objData.addProperty(FlowObjectDataProperty.newInstance("Info3",eContentType.ContentString,origObjData.properties.Info3.value));
+        objData.addProperty(FlowObjectDataProperty.newInstance("ThumbNail",eContentType.ContentString,origObjData.properties.ThumbNail.value));
+        
         return objData;
     }
 

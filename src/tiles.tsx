@@ -18,6 +18,7 @@ import CommonFunctions from './CommonFunctions';
 import TinyTile from './tiny_tile';
 import WebShopItem from './web_shop_item';
 import NavMenu from './nav_menu';
+import WebBasketItem from './webbasket_item';
 
 declare var manywho: any;
 
@@ -618,6 +619,18 @@ export default class Tiles extends FlowComponent {
                         itemsStyle.justifyContent = "left";
                         tiles.push(
                             <WebShopItem
+                                parent={this}
+                                item={key}
+                                tilesPerRow={tilesPerRow}
+                            />
+                        );
+                        break;
+
+                    case "webbasket":
+                        itemsStyle.marginBottom = "1rem";
+                        itemsStyle.justifyContent = "left";
+                        tiles.push(
+                            <WebBasketItem
                                 parent={this}
                                 item={key}
                                 tilesPerRow={tilesPerRow}
