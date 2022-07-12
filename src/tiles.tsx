@@ -280,7 +280,7 @@ export default class Tiles extends FlowComponent {
     }
 
     async doOutcome(outcome: FlowOutcome, selectedItem: FlowObjectData, ignoreRules?: boolean) {
-        let objData: FlowObjectData;
+        //let objData: FlowObjectData;
         if (selectedItem) {
             await this.setStateValue(selectedItem);
         }
@@ -295,7 +295,7 @@ export default class Tiles extends FlowComponent {
 
                         if (selectedItem && selectedItem.properties[match[1]]) {
                             // objdata had this prop
-                            href = href.replace(match[0], (objData.properties[match[1]] ? this.getTextValue(objData.properties[match[1]]) : ''));
+                            href = href.replace(match[0], (selectedItem.properties[match[1]] ? this.getTextValue(selectedItem.properties[match[1]]) : ''));
                         } else {
                             // is it a known static
                             switch (match[1]) {

@@ -36,7 +36,7 @@ Searching and pagination are also supported.
 ### Data Source
 Points to a list of objects, each one representing a tile.
 
-Can be any Type but if not using this static structure, you will need to use DisplayColumns to tell the component how to map the properties.
+Can be any Type but if not using this static structure, you will need to use DisplayColumns or attributes to tell the component how to map the properties.
 
 The Tile type is defined as so: -
 ````
