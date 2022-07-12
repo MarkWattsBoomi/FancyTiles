@@ -202,6 +202,25 @@ export default class CommonFunctions {
         return result;
     }
 
+    static stringifyValue(objData: FlowObjectData, propName: string) : string {
+        let val: string = "";
+        let prop: FlowObjectDataProperty = objData.properties[propName];
+        switch(prop.contentType){
+            case eContentType.ContentDateTime:
+                let dt: Date=new Date(Date.parse(prop.value as string)); 
+                if(isNaN(dt.getTime())){
+                    val="";
+                }
+                else {
+                    val=dt.toLocaleString();
+                }
+                break;
+            default:
+                val=prop.value as string;
+        }
+        return val;
+    }
+
     static getAttributeValue(tiles: Tiles, tile: FlowObjectData, attribute: string) : string {
         let attributeName: string = "";
         
@@ -211,14 +230,17 @@ export default class CommonFunctions {
             case "title":
                 //are we given the explicit column ?
                 if (tiles.getAttribute("TitleColumn")?.length) {
-                    return tile.properties?.[tiles.getAttribute("TitleColumn")]?.value as string;
+                    return CommonFunctions.stringifyValue(tile, tiles.getAttribute("TitleColumn"));
+                    //return tile.properties?.[tiles.getAttribute("TitleColumn")]?.value as string;
                 }
                 else {
                     if(tiles.model.displayColumns[0]) {
-                        return tile.properties?.[tiles.model.displayColumns[0].developerName]?.value as string;
+                        return CommonFunctions.stringifyValue(tile, tiles.model.displayColumns[0].developerName);
+                        //return tile.properties?.[tiles.model.displayColumns[0].developerName]?.value as string;
                     }
                     else {
-                        return tile.properties?.Title?.value as string;
+                        return CommonFunctions.stringifyValue(tile, "Title");
+                        //return tile.properties?.Title?.value as string;
                     }
                 }
 
@@ -239,14 +261,17 @@ export default class CommonFunctions {
             case "detail":
                 //are we given the explicit column ?
                 if (tiles.getAttribute("DetailsColumn")?.length) {
-                    return tile.properties?.[tiles.getAttribute("DetailsColumn")]?.value as string;
+                    return CommonFunctions.stringifyValue(tile, tiles.getAttribute("TitleColumn"));
+                    //return tile.properties?.[tiles.getAttribute("DetailsColumn")]?.value as string;
                 }
                 else {
                     if(tiles.model.displayColumns[2]) {
-                        return tile.properties?.[tiles.model.displayColumns[2].developerName]?.value as string;
+                        return CommonFunctions.stringifyValue(tile, tiles.model.displayColumns[2].developerName);
+                        //return tile.properties?.[tiles.model.displayColumns[2].developerName]?.value as string;
                     }
                     else {
-                        return tile.properties?.Details?.value as string;
+                        return CommonFunctions.stringifyValue(tile, "Details");
+                        //return tile.properties?.Details?.value as string;
                     }
                 }
 
