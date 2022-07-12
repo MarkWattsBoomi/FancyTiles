@@ -312,7 +312,7 @@ export default class Tiles extends FlowComponent {
                                         if (fldElements.length > 1) {
                                             let od: FlowObjectData = val.value as FlowObjectData;
                                             for (let epos = 1 ; epos < fldElements.length ; epos ++) {
-                                                od = (od as FlowObjectData).properties[fldElements[epos]].value as FlowObjectData;
+                                                od = (od as FlowObjectData).properties[fldElements[epos]]?.value as FlowObjectData;
                                             }
                                             value = od;
                                         } else {
