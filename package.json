@@ -13,7 +13,7 @@
   "devDependencies": {
     "@types/react": "^16.14.23",
     "css-loader": "^6.6.0",
-    "flow-component-model": "^1.7.30",
+    "flow-component-model": "^1.7.32",
     "mini-css-extract-plugin": "1.6.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
@@ -31,7 +31,6 @@
       "css": "FancyTiles.css"
     }
   },
-  "peerDependencies": {},
   "bundledDependencies": [],
-  "optionalDependencies": {}
+  "bundleDependencies": []
 }
