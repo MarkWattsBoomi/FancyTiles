@@ -35,7 +35,8 @@ module.exports = function() {
         },
         externals: {
             'react': 'React',
-            'react-dom': 'ReactDOM'
+            'react-dom': 'ReactDOM',
+            //'flow-component-model': 'FlowComponentModel'
         },
         plugins: [
             new MiniCssExtractPlugin({ filename: flow.filenames.css })
