@@ -116,7 +116,8 @@ Number.
 The default number of tiles to show per row.
 Defaults to 4.
 
-
+#### UriField
+If specified the tile's value attribute specified is tested for a value and if found that value is opened in a new tab
 
 # Tile Types
 

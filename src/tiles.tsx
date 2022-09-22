@@ -281,14 +281,20 @@ export default class Tiles extends FlowComponent {
 
     async doOutcome(outcome: FlowOutcome, selectedItem: FlowObjectData, ignoreRules?: boolean) {
         //let objData: FlowObjectData;
+
         if (selectedItem) {
             await this.setStateValue(selectedItem);
         }
         if (outcome) {
+            let uriField: string = outcome.attributes['UriField']?.value || this.attributes['UriField']?.value;
             switch (true) {
                 // does it have a uri attribute ?
                 case outcome.attributes['uri']?.value.length > 0 :
-                    let href: string = outcome.attributes['uri'].value;
+                case (uriField?.length > 0 && selectedItem.properties[uriField] && selectedItem.properties[uriField].value as string)?.length > 0 :
+                    let href: string = outcome.attributes['uri']?.value;
+                    if(selectedItem.properties[uriField] && (selectedItem.properties[uriField]?.value as string)?.length > 0) {
+                        href = selectedItem.properties[uriField]?.value as string;
+                    }
                     let match: any;
                     while (match = RegExp(/{{([^}]*)}}/).exec(href)) {
                         // could be a property of the selected item or a global variable or a static value - depends also on isBulkAction
