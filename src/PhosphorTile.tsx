@@ -6,7 +6,7 @@ import CommonFunctions from './CommonFunctions';
 
 declare const manywho: any;
 
-export default class DefaultTile extends React.Component<any,any> {
+export default class PhosphorTile extends React.Component<any,any> {
 
     constructor(props: any) {
         super(props);
@@ -45,12 +45,36 @@ export default class DefaultTile extends React.Component<any,any> {
         let content: any = null;
         
         let header: string = CommonFunctions.getAttributeValue(parent, tile, "title");
+        //if(parent.model.displayColumns[0]) {
+        //    header = tile.properties?.[parent.model.displayColumns[0].developerName]?.value as string;
+        //}
+        //else {
+        //    header = tile.properties?.Title?.value as string;
+        //}
 
         let image: string = CommonFunctions.getAttributeValue(parent, tile, "image");;
+        //if(parent.model.displayColumns[1]) {
+        //    image = tile.properties?.[parent.model.displayColumns[1].developerName]?.value as string;
+        //}
+        //else {
+        //    image = tile.properties?.Image?.value as string;
+        //}
         
         let details: string = CommonFunctions.getAttributeValue(parent, tile, "detail");;
+        //if(parent.model.displayColumns[2]) {
+        //    details = tile.properties?.[parent.model.displayColumns[2].developerName]?.value as string;
+        //}
+        //else {
+        //    details = tile.properties?.Details?.value as string;
+        //}
 
         let link: string = CommonFunctions.getAttributeValue(parent, tile, "link");;
+        //if(parent.model.displayColumns[3]) {
+        //    link = tile.properties?.[parent.model.displayColumns[3].developerName]?.value as string;
+        //}
+        //else {
+        //    link = tile.properties?.LinkLabel?.value as string;
+        //}
        
         let outcomes: any[] = [];
         Object.keys(parent.outcomes).forEach((key: string) => {
@@ -96,36 +120,18 @@ export default class DefaultTile extends React.Component<any,any> {
                 }
             }
         });
-
-        switch(true){
-            case image?.indexOf("glyphicon") >=0:
-                content = (
-                    <div 
-                        className="mw-tiles-item-content" 
-                        style={{display: 'flex'}}
-                    >
-                        <span 
-                            className={"default-icon glyphicon " + image}
-                        />
-                    </div>
-                );
-                break;
-
-            case image?.indexOf("http://") >=0:
-            case image?.indexOf("https://") >=0:
-                content = (
-                    <div 
-                        className="mw-tiles-item-content" 
-                        style={{display: 'flex'}}
-                    >
-                        <img 
-                            className={"default-image"}
-                            src={image}
-                        />
-                    </div>
-                );
-                break; 
-        }
+        // phosphoricons.com?weight=duotone&size=96&color=000000
+        let weight: string = parent.getAttribute("IconWeight","thin")
+        content = (
+            <div 
+                className="mw-tiles-item-content" 
+                style={{display: 'flex'}}
+            >
+                <i 
+                    className={"ph-" + image + "-" + weight}
+                />
+            </div>
+        );
 
         return (
             <div

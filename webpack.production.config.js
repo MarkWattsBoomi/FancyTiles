@@ -13,6 +13,7 @@ module.exports = function() {
             extensions: ['.ts', '.tsx', '.js', '.json'],
         },
         mode: 'production',
+        //devtool: 'inline-source-map',
         module: {
             rules: [
                 { 

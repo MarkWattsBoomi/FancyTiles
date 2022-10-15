@@ -2,6 +2,7 @@ import { FlowObjectData, FlowObjectDataArray } from 'flow-component-model';
 import * as React from 'react';
 import Tiles from './tiles';
 import './news_article.css';
+import CommonFunctions from './CommonFunctions';
 
 declare const manywho: any;
 
@@ -40,66 +41,75 @@ export default class NewsArticle extends React.Component<any,any> {
         let tile: FlowObjectData = parent.tiles.get(this.props.item);
         let flexBasis: string = Math.floor(((100 / this.props.tilesPerRow)-1)) + "%";
         
-        let icon: any = null;
-        let header: any = (
+        let headerField: string = CommonFunctions.getAttributeValue(parent, tile, "title");
+
+        let imageField: string = CommonFunctions.getAttributeValue(parent, tile, "image");;
+        
+        let detailsField: string = CommonFunctions.getAttributeValue(parent, tile, "detail");;
+
+        let linkField: string = CommonFunctions.getAttributeValue(parent, tile, "link");;
+        let dateField: string = CommonFunctions.getAttributeValue(parent, tile, "date");;
+        let authorField: string = CommonFunctions.getAttributeValue(parent, tile, "author");;
+
+        let headerElement: any = (
             <div
                 className='newsarticle-header'
             >
                 <span
                     className='newsarticle-header-label'
                 >
-                    {tile.properties?.Title?.value as string}
+                    {headerField + (dateField?.length > 0 ? " " + dateField : "") + (authorField?.length > 0 ? " - " + authorField : "")}
                 </span>
             </div>
             
         );
 
         
-        let body: any = (
+        let bodyElement: any = (
             <div
                 className='newsarticle-body'
             >
                 <span
                     className='newsarticle-body-text'
                 >
-                    {tile.properties?.Details?.value as string}
+                    {detailsField}
                 </span>
             </div>
             
         );
-        let footer: any = (
+        let footerElement: any = (
             <div
                 className='newsarticle-footer'
             >
                 <span
                     className='newsarticle-footer-text'
                 >
-                    {tile.properties?.LinkLabel?.value as string}
+                    {linkField}
                 </span>
             </div>
             
         );
 
-        let imageName: string = tile.properties?.Image?.value as string;
-        let image: any;
+        
+        let imageElement: any;
         switch(true){
-            case imageName?.indexOf("glyphicon") >=0:
-                image = (
+            case imageField?.indexOf("glyphicon") >=0:
+                imageElement = (
                     <span 
-                        className={"warmlink-icon-icon glyphicon " + imageName}
+                        className={"warmlink-icon-icon glyphicon " + imageField}
                     />
                 );
                 break;
-            case imageName?.indexOf("http://") >=0:
-            case imageName?.indexOf("https://") >=0:
-                image = (
+            case imageField?.indexOf("http://") >=0:
+            case imageField?.indexOf("https://") >=0:
+                imageElement = (
                     <div 
                         className="full-width-image" 
                         style={{display: 'flex'}}
                     >
                         <img 
                             className={"deft-large"}
-                            src={image}
+                            src={imageField}
                         />
                     </div>
                 );
@@ -126,14 +136,14 @@ export default class NewsArticle extends React.Component<any,any> {
                     <div
                         className='newsarticle-content'
                     >
-                        {header}
-                        {body}
-                        {footer}
+                        {headerElement}
+                        {bodyElement}
+                        {footerElement}
                     </div>
                     <div
                         className='newsarticle-image'
                     >
-                            {image}
+                            {imageElement}
                     </div>
                 </div>
             </div>

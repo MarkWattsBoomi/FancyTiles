@@ -19,6 +19,7 @@ import TinyTile from './tiny_tile';
 import WebShopItem from './web_shop_item';
 import NavMenu from './nav_menu';
 import WebBasketItem from './webbasket_item';
+import PhosphorTile from './PhosphorTile';
 
 declare var manywho: any;
 
@@ -473,7 +474,15 @@ export default class Tiles extends FlowComponent {
         if (this.tilePages && this.tilePages.length > 0 && this.tilePages[this.currentPage]) {
             this.tilePages[this.currentPage].forEach((xtile: FlowObjectData, key: string) => {
                 switch(tiletype) {
-
+                    case "phosphor":
+                        tiles.push(
+                            <PhosphorTile
+                                parent={this}
+                                item={key}
+                                tilesPerRow={tilesPerRow}
+                            />
+                        );
+                        break;
                     case "tinytile":
                         itemsStyle.justifyContent="left"
                         tiles.push(
