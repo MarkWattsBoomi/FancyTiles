@@ -3,18 +3,34 @@
 }
 
 .mw-tiles {
-    margin-top: 1rem;
+    margin-top: 0 !important;
+    display: flex;
+    flex-direction: column;
 }
 
 .mw-bs .mw-tiles-items {
     justify-content: center;
+    flex-grow: 1;
 }
 
 .mw-tiles-item {
     overflow: hidden;
 }
-.tiles {
 
+
+.mw-tiles-title {
+    height: 2.5rem;
+    background-color: #033d58;
+    padding-left: 1rem;
+    display: flex;
+    flex-grow: 0;
+}
+
+.mw-tiles-title-label {
+    color: #fefefe;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 1.2rem;
 }
 
 .tiles-ribbon {
@@ -25,6 +41,7 @@
     top: 0;
     left: 0;
     right: 0;
+    flex-grow: 0;
 }
 
 .tiles-ribbon-left-wrapper {

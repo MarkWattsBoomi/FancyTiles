@@ -35,7 +35,7 @@ export default class Tiles extends FlowComponent {
 
     // this holds the current pagination page number
     currentPage: number = 0;
-
+    titleElement: any;
     header: TilesRibbon;
     headerElement: any;
     footer: TilesFooter;
@@ -51,7 +51,7 @@ export default class Tiles extends FlowComponent {
         super(props);
 
         this.flowMoved = this.flowMoved.bind(this);
-
+        this.setHeader = this.setHeader.bind(this);
         this.buildRibbon=this.buildRibbon.bind(this);
         this.calculateValue=this.calculateValue.bind(this);
         this.callRequest=this.callRequest.bind(this);
@@ -70,6 +70,7 @@ export default class Tiles extends FlowComponent {
         this.paginateRows=this.paginateRows.bind(this);
         this.previousPage=this.previousPage.bind(this);
         this.tileClicked=this.tileClicked.bind(this);
+        this.preLoad=this.preLoad.bind(this);
     }
 
     async componentDidMount(): Promise<void> {
@@ -78,6 +79,7 @@ export default class Tiles extends FlowComponent {
         this.maxTilesPerPage = parseInt(localStorage.getItem('tiles-max-' + this.componentId));
         if(isNaN(this.maxTilesPerPage)) this.maxTilesPerPage = parseInt(this.getAttribute('PaginationSize', "10"));
         this.selectedTile=(this.getStateValue() as FlowObjectData)?.internalId; 
+        await this.preLoad();
         this.loadTiles();        
     }
 
@@ -97,10 +99,75 @@ export default class Tiles extends FlowComponent {
                 this.maxTilesPerPage = parseInt(localStorage.getItem('tiles-max-' + this.componentId));
                 if(isNaN(this.maxTilesPerPage)) this.maxTilesPerPage = parseInt(this.getAttribute('PaginationSize', "10"));
                 this.selectedTile=(this.getStateValue() as FlowObjectData)?.internalId; 
+                await this.preLoad();
                 this.loadTiles();
             }
         }
 
+    }
+
+    setHeader(element: TilesRibbon) {
+        if(element) {
+            this.header = element;
+            this.header.generateButtons();
+        }
+    }
+
+    async preLoad() : Promise<any> {
+        //preload any column rule values
+        let alreadyDone: string[] = [];
+        let outcomes: FlowOutcome[] = Array.from(Object.values(this.outcomes));
+        for(let pos = 0 ; pos < outcomes.length ; pos++) {
+            let outcome: FlowOutcome = outcomes[pos];
+            if (outcome.attributes.rule && outcome.attributes.rule.value.length > 0) {
+                try {
+                    const rule = JSON.parse(outcome.attributes.rule.value);
+                    // since this is a global then the value of the rule.field must be a flow field or the property of one
+                    // split the rule.field on the separator
+                    let match: any;
+                    let fld: string = rule.field;
+                    while (match = RegExp(/{{([^}]*)}}/).exec(fld)) {
+                        switch (match[1]) {
+                            case 'TENANT_ID':
+                                break;
+    
+                            default:
+                                const fldElements: string[] = match[1].split('->');
+                                // element[0] is the flow field name
+                                let val: FlowField;
+                                if (alreadyDone.indexOf(fldElements[0]) < 0) {
+                                    val = await this.loadValue(fldElements[0]);
+                                    alreadyDone.push(fldElements[0]);
+                                }
+                                break;
+                        }
+                        fld = fld.replace(match[0], "done");
+                    }
+                    fld = rule.value;
+                    while (match = RegExp(/{{([^}]*)}}/).exec(fld)) {
+                        switch (match[1]) {
+                            case 'TENANT_ID':
+                                break;
+    
+                            default:
+                                const fldElements: string[] = match[1].split('->');
+                                // element[0] is the flow field name
+                                let val: FlowField;
+                                if (alreadyDone.indexOf(fldElements[0]) < 0) {
+                                    val = await this.loadValue(fldElements[0]);
+                                    alreadyDone.push(fldElements[0]);
+                                }
+                                break;
+                        }
+                        fld = fld.replace(match[0], "done");
+                    }
+                }
+                catch (e) {
+                    console.log('The rule on outcome ' + outcome.developerName + ' is invalid');
+                }
+            }
+        }        
+        return true;
     }
 
     loadTiles() {
@@ -111,14 +178,27 @@ export default class Tiles extends FlowComponent {
                 this.selectedTile = tile.internalId;
             }
         });
-
+        this.titleElement = undefined;
         this.header = undefined;
         this.footer = undefined;
+        if(this.model.label?.length > 0) {
+            this.titleElement = (
+                <div
+                    className='mw-tiles-title'
+                >
+                    <span
+                        className='mw-tiles-title-label'
+                    >
+                        {this.model.label}
+                    </span>
+                </div>
+            );
+        }
         if(this.model.searchable === true) {
             this.headerElement = (
                 <TilesRibbon
                     root={this}
-                    ref={(element: TilesRibbon) => {this.header=element}}
+                    ref={(element: TilesRibbon) => {this.setHeader(element);}}
                 />
             );
             this.footerElement = (
@@ -188,7 +268,7 @@ export default class Tiles extends FlowComponent {
         this.tilePages.push(currentPage);
         this.currentPage = 0;
         const end: Date = new Date();
-        this.forceUpdate();
+        this.buildRibbon();
     }
 
     async buildRibbon() {
@@ -465,10 +545,13 @@ export default class Tiles extends FlowComponent {
         if (this.props.isDesignTime) return null;
         let tiletype: string = this.getAttribute("TileType", "default").toLowerCase();
         let tilesPerRow: number = parseInt(this.getAttribute("TilesPerRow", "4").toLowerCase());
+        let height: string = this.getAttribute("height", "auto");
+
 
         let header: any;
         let componentStyle: React.CSSProperties = {};
         let itemsStyle: React.CSSProperties = {};
+        componentStyle.height = height;
         
         let tiles: any[] = [];
         if (this.tilePages && this.tilePages.length > 0 && this.tilePages[this.currentPage]) {
@@ -698,6 +781,7 @@ export default class Tiles extends FlowComponent {
                     parent={this}
                     ref={(element: FlowMessageBox) => {this.messageBox = element; }}
                 />
+                {this.titleElement}
                 {this.headerElement}
                 <div 
                     className="mw-tiles-items"
@@ -712,6 +796,7 @@ export default class Tiles extends FlowComponent {
 }
 
 manywho.component.registerItems("tiles", Tiles);
+manywho.component.registerItems("FancyTiles", Tiles);
 
 //export const getTiles = () : typeof Tiles => manywho.component.getByName("tiles");
 

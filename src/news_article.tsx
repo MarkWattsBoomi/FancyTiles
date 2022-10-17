@@ -71,9 +71,8 @@ export default class NewsArticle extends React.Component<any,any> {
             >
                 <span
                     className='newsarticle-body-text'
-                >
-                    {detailsField}
-                </span>
+                    dangerouslySetInnerHTML={{__html: detailsField}}
+                />
             </div>
             
         );
