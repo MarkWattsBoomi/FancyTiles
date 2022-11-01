@@ -20,6 +20,7 @@ import WebShopItem from './web_shop_item';
 import NavMenu from './nav_menu';
 import WebBasketItem from './webbasket_item';
 import PhosphorTile from './PhosphorTile';
+import ComponentStoreItem from './ComponentStore/ComponentStoreItem';
 
 declare var manywho: any;
 
@@ -729,6 +730,17 @@ export default class Tiles extends FlowComponent {
                         itemsStyle.justifyContent = "left";
                         tiles.push(
                             <WebBasketItem
+                                parent={this}
+                                item={key}
+                                tilesPerRow={tilesPerRow}
+                            />
+                        );
+                        break;
+                    case "component":
+                        itemsStyle.marginBottom = "1rem";
+                        itemsStyle.justifyContent = "left";
+                        tiles.push(
+                            <ComponentStoreItem
                                 parent={this}
                                 item={key}
                                 tilesPerRow={tilesPerRow}

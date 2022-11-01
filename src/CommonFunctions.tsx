@@ -213,7 +213,7 @@ export default class CommonFunctions {
                         val="";
                     }
                     else {
-                        val=dt.toLocaleString();
+                        val=dt.toLocaleDateString();
                     }
                     break;
                 default:
@@ -227,12 +227,12 @@ export default class CommonFunctions {
         return val;
     }
 
-    static getAttributeValue(tiles: Tiles, tile: FlowObjectData, attribute: string) : string {
-        let attributeName: string = "";
+    static getAttributeValue(tiles: Tiles, tile: FlowObjectData, attributeName: string) : string {
+        //let attributeName: string = "";
         
 
         //default to the display column order
-        switch(attribute.toLowerCase()) {
+        switch(attributeName.toLowerCase()) {
             case "title":
                 //are we given the explicit column ?
                 if (tiles.getAttribute("TitleColumn")?.length) {
@@ -243,7 +243,7 @@ export default class CommonFunctions {
                         return CommonFunctions.stringifyValue(tile, tiles.model.displayColumns[0].developerName);
                     }
                     else {
-                        return CommonFunctions.stringifyValue(tile, "Title");
+                        return CommonFunctions.stringifyValue(tile, attributeName);
                     }
                 }
 
@@ -271,7 +271,7 @@ export default class CommonFunctions {
                         return CommonFunctions.stringifyValue(tile, tiles.model.displayColumns[2]?.developerName);
                     }
                     else {
-                        return CommonFunctions.stringifyValue(tile, "Details");
+                        return CommonFunctions.stringifyValue(tile, attributeName);
                     }
                 }
 
@@ -285,7 +285,7 @@ export default class CommonFunctions {
                         return tile.properties?.[tiles.model.displayColumns[3]?.developerName]?.value as string;
                     }
                     else {
-                        return tile.properties?.LinkLabel?.value as string;
+                        return CommonFunctions.stringifyValue(tile, attributeName);
                     }
                 }
             
@@ -310,7 +310,7 @@ export default class CommonFunctions {
                         return tile.properties?.[tiles.model.displayColumns[4]?.developerName]?.value as string;
                     }
                     else {
-                        return tile.properties?.LinkLabel?.value as string;
+                        return CommonFunctions.stringifyValue(tile, attributeName);
                     }
                 }
 
@@ -324,8 +324,15 @@ export default class CommonFunctions {
                         return tile.properties?.[tiles.model.displayColumns[4]?.developerName]?.value as string;
                     }
                     else {
-                        return tile.properties?.LinkLabel?.value as string;
+                        return CommonFunctions.stringifyValue(tile, attributeName);
                     }
+                }
+            default:
+                if (tiles.getAttribute(attributeName)?.length) {
+                    return tile.properties?.[tiles.getAttribute(attributeName)]?.value as string;
+                }
+                else {
+                    return CommonFunctions.stringifyValue(tile, attributeName);
                 }
                       
         }
