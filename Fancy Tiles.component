@@ -1,0 +1,48 @@
+{
+  "attributes": {
+    "height": "Height of the component e.g. 60vh, 50px etc",
+    "TileType": "Tile type, the name of the type of tile to display",
+    "ImageColumn": "The model attribute name containing an image uri",
+    "TilesPerRow": "Number of tiles to display per row",
+    "TitleColumn": "The model attribute name containing the title.",
+    "DetailsColumn": "The model attribute containing details text."
+  },
+  "configurationEditors": [
+    "LABEL",
+    "STATE_VALUE",
+    "DATA_SOURCE_LIST",
+    "DATA_PRESENTATION"
+  ],
+  "dateCreated": "2023-05-12T12:42:07.3433181+00:00",
+  "dateModified": "2023-05-12T12:42:07.3433187+00:00",
+  "designTimeImageURL": null,
+  "designTimeRenderType": null,
+  "developerName": "Fancy Tiles",
+  "developerSummary": "An extension of the tiles component with various styles.",
+  "elementType": "CUSTOM_PAGE_COMPONENT",
+  "icon": "SquaresFour",
+  "id": "e8b817b1-8401-4338-8a2d-8d75f2c96719",
+  "key": "fancytiles",
+  "legacyScriptURL": "http://localhost:8080/FancyTiles.js",
+  "legacyStyleSheetURL": "http://localhost:8080/FancyTiles.css",
+  "scriptURL": null,
+  "styleSheetURL": null,
+  "whoCreated": {
+    "email": "markwatts@boomi.com",
+    "firstName": "Mark",
+    "id": "4e027512-3134-4403-91c2-227e8256a7f0",
+    "lastName": "Watts"
+  },
+  "whoModified": {
+    "email": "markwatts@boomi.com",
+    "firstName": "Mark",
+    "id": "4e027512-3134-4403-91c2-227e8256a7f0",
+    "lastName": "Watts"
+  },
+  "whoOwner": {
+    "email": "markwatts@boomi.com",
+    "firstName": "Mark",
+    "id": "4e027512-3134-4403-91c2-227e8256a7f0",
+    "lastName": "Watts"
+  }
+}
