@@ -19,7 +19,7 @@ NOTE: Visibility based on page conditions is respected.
 
 
 
-# tiles - out of box extension, no special classname
+# FancyTiles
 
 
 ## Functionality
@@ -36,9 +36,9 @@ Searching and pagination are also supported.
 ### Data Source
 Points to a list of objects, each one representing a tile.
 
-Can be any Type but if not using this static structure, you will need to use DisplayColumns or attributes to tell the component how to map the properties.
+Can be any Type, you will need to use DisplayColumns or attributes to tell the component how to map the properties.
 
-The Tile type is defined as so: -
+The Tile type for some of the more complex ones is defined as so: -
 ````
 {
         "developerName": "Tile",
@@ -102,7 +102,7 @@ A single item of the same type as the datasource.
 
 ### Data Presentation
 
-Se each tile type for it's specific mappings.
+See each tile type for it's specific mappings.
 
 ### Attributes
 
@@ -118,6 +118,9 @@ Defaults to 4.
 
 #### UriField
 If specified the tile's value attribute specified is tested for a value and if found that value is opened in a new tab
+
+#### TitleColumn, ImageColumn, DetailsColumn, LinkColumn
+Set these to your type's attribute name containing these properties
 
 # Tile Types
 

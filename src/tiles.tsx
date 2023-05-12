@@ -807,8 +807,8 @@ export default class Tiles extends FlowComponent {
     }
 }
 
-manywho.component.registerItems("tiles", Tiles);
-manywho.component.registerItems("FancyTiles", Tiles);
+//manywho.component.registerItems("tiles", Tiles);
+manywho.component.registerItems("fancytiles", Tiles);
 
 //export const getTiles = () : typeof Tiles => manywho.component.getByName("tiles");
 
