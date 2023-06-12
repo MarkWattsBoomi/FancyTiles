@@ -11,10 +11,11 @@
     "LABEL",
     "STATE_VALUE",
     "DATA_SOURCE_LIST",
-    "DATA_PRESENTATION"
+    "DATA_PRESENTATION",
+    "SEARCHABLE"
   ],
-  "dateCreated": "2023-05-12T12:42:07.3433181+00:00",
-  "dateModified": "2023-05-12T12:42:07.3433187+00:00",
+  "dateCreated": "2023-06-12T08:51:41.384984+00:00",
+  "dateModified": "2023-06-12T09:09:54.0903937+00:00",
   "designTimeImageURL": null,
   "designTimeRenderType": null,
   "developerName": "Fancy Tiles",
@@ -30,19 +31,19 @@
   "whoCreated": {
     "email": "markwatts@boomi.com",
     "firstName": "Mark",
-    "id": "4e027512-3134-4403-91c2-227e8256a7f0",
+    "id": "22dcefc8-b407-4974-8044-327cb44b134e",
     "lastName": "Watts"
   },
   "whoModified": {
     "email": "markwatts@boomi.com",
     "firstName": "Mark",
-    "id": "4e027512-3134-4403-91c2-227e8256a7f0",
+    "id": "22dcefc8-b407-4974-8044-327cb44b134e",
     "lastName": "Watts"
   },
   "whoOwner": {
     "email": "markwatts@boomi.com",
     "firstName": "Mark",
-    "id": "4e027512-3134-4403-91c2-227e8256a7f0",
+    "id": "22dcefc8-b407-4974-8044-327cb44b134e",
     "lastName": "Watts"
   }
 }

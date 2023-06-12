@@ -54,6 +54,7 @@ export default class Tiles extends FlowComponent {
         this.flowMoved = this.flowMoved.bind(this);
         this.setHeader = this.setHeader.bind(this);
         this.buildRibbon=this.buildRibbon.bind(this);
+        this.buildFooter=this.buildFooter.bind(this);
         this.calculateValue=this.calculateValue.bind(this);
         this.callRequest=this.callRequest.bind(this);
         this.cancelOutcomeForm=this.cancelOutcomeForm.bind(this);
@@ -202,13 +203,13 @@ export default class Tiles extends FlowComponent {
                     ref={(element: TilesRibbon) => {this.setHeader(element);}}
                 />
             );
-            this.footerElement = (
-                <TilesFooter
-                    root={this}
-                    ref={(element: TilesFooter) => {this.footer=element}}
-                />
-            );
         }
+        this.footerElement = (
+            <TilesFooter
+                root={this}
+                ref={(element: TilesFooter) => {this.footer=element}}
+            />
+        );
         
         this.filterTiles();
     }
@@ -270,10 +271,16 @@ export default class Tiles extends FlowComponent {
         this.currentPage = 0;
         const end: Date = new Date();
         this.buildRibbon();
+        this.buildFooter();
     }
 
     async buildRibbon() {
         await this.header?.generateButtons();
+        this.forceUpdate();
+    }
+
+    async buildFooter() {
+        this.footer?.forceUpdate();
         this.forceUpdate();
     }
 
@@ -523,21 +530,25 @@ export default class Tiles extends FlowComponent {
     async firstPage() {
         this.currentPage = 0;
         this.forceUpdate();
+        this.buildFooter();
     }
 
     previousPage() {
         if (this.currentPage > 1) { this.currentPage -= 1; } else { this.currentPage = 0; }
         this.forceUpdate();
+        this.buildFooter();
     }
 
     nextPage() {
         if (this.currentPage < (this.tilePages.length - 1)) { this.currentPage += 1; } else { this.currentPage = this.tilePages.length - 1; }
         this.forceUpdate();
+        this.buildFooter();
     }
 
     lastPage() {
         this.currentPage = this.tilePages.length - 1 ;
         this.forceUpdate();
+        this.buildFooter();
     }
 
     render() {

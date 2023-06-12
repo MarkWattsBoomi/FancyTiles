@@ -1067,6 +1067,7 @@
 .mw-bs .mw-tiles-items {
     justify-content: center;
     flex-grow: 1;
+    overflow-y: auto;
 }
 
 .mw-tiles-item {
