@@ -255,7 +255,6 @@ export default class CatalogItem extends React.Component<any,any> {
                     />
                     <div 
                         className="catalogitem-footer"
-                        style={footerStyle}
                     >
                         {tileFooter}
                     </div>
