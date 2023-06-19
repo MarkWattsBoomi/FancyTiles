@@ -51,16 +51,22 @@ export default class CatalogItem extends React.Component<any,any> {
             header = tile.properties?.Title?.value as string;
         }
 
-        let details: string;
-        if(parent.model.displayColumns[1]) {
+        let details: string = CommonFunctions.getAttributeValue(parent, tile, "Description");
+        let short_details: string = details;
+        if(short_details.length > 100) {
+            short_details = short_details.substring(0,100) + "...";
+        }
+        /*if(parent.model.displayColumns[1]) {
+            CommonFunctions.getAttributeValue(parent, tile, "detail")
             details = tile.properties?.[parent.model.displayColumns[1].developerName]?.value as string;
         }
         else {
             details = tile.properties?.Details?.value as string;
         }
+        */
 
         let type: string;
-        let tileStyle: React.CSSProperties = {position: "relative"};
+        let tileStyle: React.CSSProperties = {};
         let footerStyle: React.CSSProperties = {};
         let tileIcon: any;
         let tileLabel: string;
@@ -75,14 +81,14 @@ export default class CatalogItem extends React.Component<any,any> {
                 tileStyle.backgroundColor = "#b3c2f1";
                 footerStyle.backgroundColor = "#b3c2f1";
                 tileIcon = (<span className='catalogitem-icon glyphicon glyphicon-book'/>);
-                tileLabel = "Presales Catalog";
+                tileLabel = "Service Catalog";
                 break;
 
             case "casestudy":
                 tileStyle.backgroundColor = "#fcfdde";
                 footerStyle.backgroundColor = "#fcfdde";
                 tileIcon = (<span className='catalogitem-icon glyphicon glyphicon-briefcase'/>);
-                tileLabel = "User Case Study"
+                tileLabel = "Case Study"
                 break;
 
             case "customdemo":
@@ -96,7 +102,7 @@ export default class CatalogItem extends React.Component<any,any> {
                 tileStyle.backgroundColor = "#edb2c3";
                 footerStyle.backgroundColor = "#edb2c3";
                 tileIcon = (<span className='catalogitem-icon glyphicon glyphicon-education'/>);
-                tileLabel = "Reference Architecture"
+                tileLabel = "Ref. Architecture"
                 break;
         }
 
@@ -210,8 +216,11 @@ export default class CatalogItem extends React.Component<any,any> {
                         className="catalogitem-header"
                     >
                         <div
-                            className='catalogitem-header-icons'
+                            className='catalogitem-title-emblem'
                             style={tileStyle}
+                        />
+                        <div
+                            className='catalogitem-header-icons'
                         >
                             {tileIcon}
                             <div
@@ -241,7 +250,8 @@ export default class CatalogItem extends React.Component<any,any> {
                     {content}
                     <div 
                         className="catalogitem-body" 
-                        dangerouslySetInnerHTML={{ __html: details}} 
+                        title={details}
+                        dangerouslySetInnerHTML={{ __html: short_details}} 
                     />
                     <div 
                         className="catalogitem-footer"
