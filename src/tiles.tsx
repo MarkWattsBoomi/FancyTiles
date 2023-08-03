@@ -559,11 +559,11 @@ export default class Tiles extends FlowComponent {
         let tilesPerRow: number = parseInt(this.getAttribute("TilesPerRow", "4").toLowerCase());
         let height: string = this.getAttribute("height", "auto");
 
-
-        let header: any;
         let componentStyle: React.CSSProperties = {};
         let itemsStyle: React.CSSProperties = {};
         componentStyle.height = height;
+
+        let header: any;
         
         let tiles: any[] = [];
         if (this.tilePages && this.tilePages.length > 0 && this.tilePages[this.currentPage]) {
@@ -792,6 +792,11 @@ export default class Tiles extends FlowComponent {
             className = "mw-tiles";
         }
 
+        let footer: any;
+        if(this.tilePages?.length > 1 || this.model.searchable === true) {
+            footer = this.footerElement;
+        }
+
 
         return (
             <div 
@@ -812,7 +817,7 @@ export default class Tiles extends FlowComponent {
                 >
                     {tiles}
                 </div>
-                {this.footerElement}
+                {footer}
             </div>
         );
     }
